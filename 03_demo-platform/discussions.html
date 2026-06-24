@@ -1,0 +1,960 @@
+<!doctype html>
+<html>
+	
+<head>
+<meta charset="utf-8">
+<title>eCH Standards</title>
+<link rel="stylesheet" href="css/ech-style.css">
+	
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-soft: #f8fafb;
+    --surface-softer: #fbfcfd;
+    --border: #d9e0e5;
+    --text: #1f2a37;
+    --muted: #6b7280;
+    --primary: #0071bb;
+    --primary-soft: #eaf4fb;
+    --green: #4d7c57;
+    --green-soft: #edf6ef;
+    --orange: #b7791f;
+    --orange-soft: #fff6e8;
+    --red: #b42318;
+    --red-soft: #fef3f2;
+    --purple: #6f42c1;
+    --purple-soft: #f3edff;
+    --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    --radius: 16px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 32px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+
+  .header-card {
+    padding: 26px 30px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .lead {
+    margin: 0;
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 980px;
+  }
+
+  .badge-row,
+  .meta-row,
+  .channel-meta,
+  .action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .badge,
+  .tag,
+  .mini-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+  }
+
+  .badge.primary,
+  .mini-badge.primary {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-color: #b7d7ee;
+  }
+
+  .badge.green,
+  .mini-badge.green {
+    background: var(--green-soft);
+    color: var(--green);
+    border-color: #cfe3d3;
+  }
+
+  .badge.orange,
+  .mini-badge.orange {
+    background: var(--orange-soft);
+    color: var(--orange);
+    border-color: #f1d2a2;
+  }
+
+  .badge.red,
+  .mini-badge.red {
+    background: var(--red-soft);
+    color: var(--red);
+    border-color: #f1c6c1;
+  }
+
+  .badge.purple,
+  .mini-badge.purple {
+    background: var(--purple-soft);
+    color: var(--purple);
+    border-color: #ddd0fb;
+  }
+
+  .section {
+    padding: 24px 28px;
+  }
+
+  .section-title {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+  }
+
+  .section-subtitle {
+    margin: 0 0 18px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .stat-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface-softer);
+    padding: 16px;
+    min-height: 110px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .stat-value {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .stat-note {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .trend-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .trend-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface-softer);
+    padding: 16px;
+  }
+
+  .trend-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+  }
+
+  .trend-rank {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--orange-soft);
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid #f1d2a2;
+  }
+
+  .trend-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .field input,
+  .field select {
+    width: 100%;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 14px;
+    background: #fff;
+    color: var(--text);
+  }
+
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .channel-card {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: #fff;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .channel-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+    border-color: #c8d3dc;
+  }
+
+  .channel-top {
+    padding: 20px 22px 16px 22px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(to bottom, #ffffff, #fcfdff);
+  }
+
+  .channel-top-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .channel-title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .channel-subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .channel-body {
+    padding: 18px 22px 20px 22px;
+  }
+
+  .channel-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .info-box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-softer);
+    padding: 14px;
+  }
+
+  .info-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .info-value {
+    font-size: 14px;
+  }
+
+  .activity-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .activity-chip {
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .channel-footer {
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-link {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--primary);
+  }
+
+  .btn-link:hover {
+    text-decoration: none;
+    filter: brightness(0.97);
+  }
+
+  .muted-text {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .empty-note {
+    padding: 16px;
+    border: 1px dashed #cfd8df;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1100px) {
+    .stats-grid,
+    .trend-grid,
+    .channels-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    body {
+      padding: 18px;
+    }
+
+    .filter-grid,
+    .channel-info-grid,
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: 27px;
+    }
+  }
+</style>
+	
+	
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+
+    <tr>
+		<td width="100"></td>
+      <td>
+                <a href="index.html"><img src="img/logo-ech.svg" alt="" width="300"></a>
+      </td>
+      <td></td>
+      <td></td>
+	<td width="100"></td>
+    </tr>
+
+    <tr>
+	<td width="100"></td>
+      <td width="1029"></td>
+		
+	  <td width="150">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="normbrowser.html">NormBrowser</a>
+
+        </div>
+      </td>
+
+      <td width="100">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Explorer</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="interop_matrix.html">Interopmatrix</a></li>
+            <li><a href="http://localhost:7474/browser/">Graph</a></li>
+          </ul>
+
+        </div>
+      </td>
+
+      <td width="200">
+
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Forum</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="discussions.html">All</a></li>
+            <li><a href="discussions.html">eCH Private</a></li>
+          </ul>
+
+        </div>
+
+      </td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="50">
+		<td width="100" bgcolor="#f1f2f1"></td>
+     <td bgcolor="#f1f2f1"><a class="dropdown-link" href="index.html">NormGraph</a> » <a class="dropdown-link" href="discussions.html">Forum</a> » <a class="dropdown-link" href="discussions.html">All</a></td>
+      <td bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"></td>
+		<td width="100" bgcolor="#f1f2f1"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<img src="img/chatgpt.png" alt=""/>
+
+	
+<table width="100%" border="0">
+  <tbody>
+	<tr>
+	<td width="100"></td>
+	<td>
+		
+		
+<div class="page">
+
+  <section class="card header-card">
+    <div class="eyebrow">NormGraph › Discussions</div>
+    <h1>Übersicht aller Diskussionskanäle</h1>
+    <p class="lead">
+      Diese Seite bündelt alle Diskussionskanäle zu Versionen von Building Blocks.
+      Sie zeigt aktuelle Trends, zentrale Kennzahlen und erlaubt die Filterung nach
+      Standard-Zugehörigkeit, Type, Status, Aktualität, Aktivität und Verantwortlichkeit.
+    </p>
+
+    <div class="badge-row">
+      <span class="badge primary">Kanäle zu BB-Versionen</span>
+      <span class="badge green">Öffentliche und private Diskussionen</span>
+      <span class="badge orange">Monitoring von Aktivität und Trends</span>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2 class="section-title">Übergeordnete Kennzahlen</h2>
+    <p class="section-subtitle">
+      Demo-Kennzahlen über alle Diskussionskanäle hinweg.
+    </p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Gesamte Kanäle</div>
+        <div class="stat-value">18</div>
+        <div class="stat-note">Davon 7 aktuell aktiv</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Posts total</div>
+        <div class="stat-value">642</div>
+        <div class="stat-note">Öffentliche und private Beiträge zusammen</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Trending-Kanäle</div>
+        <div class="stat-value">3</div>
+        <div class="stat-note">Hohe Aktivität in den letzten 7 Tagen</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Abonnenten</div>
+        <div class="stat-value">289</div>
+        <div class="stat-note">RSS und E-Mail zusammen</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Mittlere Aktivität</div>
+        <div class="stat-value">5.2</div>
+        <div class="stat-note">Posts pro Kanal / Monat</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2 class="section-title">Welche Kanäle sind aktuell trending?</h2>
+    <p class="section-subtitle">
+      Demo-Ranking nach Aktivität, Aktualität und Anzahl Interaktionen.
+    </p>
+
+    <div class="trend-grid">
+      <div class="trend-card">
+        <div class="trend-rank">#1 Trending</div>
+        <h3>BB-0123 · Anschrift · v1.2.0</h3>
+        <p class="trend-text">
+          Hohe Aktivität seit Beginn der öffentlichen Konsultation. Mehrere neue Kommentare
+          zur Modellierung von Adresszusätzen und internationalen Anschriften.
+        </p>
+        <div class="badge-row">
+          <span class="mini-badge green">Status: Öffentliche Konsultation</span>
+          <span class="mini-badge primary">12 Posts / 7 Tage</span>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="trend-rank">#2 Trending</div>
+        <h3>BB-0044 · Organisation · v2.0.0</h3>
+        <p class="trend-text">
+          Anstieg der Diskussionen zur Kompatibilität mit Identifikatoren und
+          organisationsbezogenen Metadaten.
+        </p>
+        <div class="badge-row">
+          <span class="mini-badge orange">Status: Inhaltliche QS2</span>
+          <span class="mini-badge primary">9 Posts / 7 Tage</span>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="trend-rank">#3 Trending</div>
+        <h3>BB-0091 · Person · v1.8.0</h3>
+        <p class="trend-text">
+          Mehrere Rückfragen aus Fachgruppen zur Wiederverwendung in unterschiedlichen Standards.
+        </p>
+        <div class="badge-row">
+          <span class="mini-badge purple">Status: Einarbeitung Rückmeldungen</span>
+          <span class="mini-badge primary">7 Posts / 7 Tage</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2 class="section-title">Kanäle filtern</h2>
+    <p class="section-subtitle">
+      Die Filter sind für Demozwecke vorbereitet und können später mit echter Logik hinterlegt werden.
+    </p>
+
+    <div class="filter-grid">
+      <div class="field">
+        <label for="search">Suche</label>
+        <input id="search" type="text" placeholder="Nach BB, Version oder Begriff suchen …">
+      </div>
+
+      <div class="field">
+        <label for="standard">Standard-Zugehörigkeit</label>
+        <select id="standard">
+          <option>Alle</option>
+          <option>XZuFi</option>
+          <option>XGewerbeanzeige</option>
+          <option>XPlanverfahren</option>
+          <option>XUnternehmen</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="type">Type</label>
+        <select id="type">
+          <option>Alle</option>
+          <option>Request for Change</option>
+          <option>Frage</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status">
+          <option>Alle</option>
+          <option>Eingereicht</option>
+          <option>Erarbeitung</option>
+          <option>Formale QS1</option>
+          <option>Inhaltliche QS1</option>
+          <option>Übersetzung 1</option>
+          <option>Öffentliche Konsultation</option>
+          <option>Einarbeitung Rückmeldungen</option>
+          <option>Formale QS2</option>
+          <option>Inhaltliche QS2</option>
+          <option>Genehmigt</option>
+          <option>Abgelehnt</option>
+          <option>Übersetzung 2</option>
+          <option>Publikation</option>
+          <option>Überprüfung</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="freshness">Aktualität</label>
+        <select id="freshness">
+          <option>Alle</option>
+          <option>Heute aktualisiert</option>
+          <option>Letzte 7 Tage</option>
+          <option>Letzte 30 Tage</option>
+          <option>Neu erstellt</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="responsibility">Verantwortlichkeit</label>
+        <select id="responsibility">
+          <option>Alle</option>
+          <option>eCH Fachgruppe Meldewesen</option>
+          <option>eCH Fachgruppe Wirtschaftsdaten</option>
+          <option>eCH Fachgruppe Planung</option>
+          <option>Interdisziplinäres Reviewteam</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <span class="badge">Zusatzfilter Aktivität: Posts in einem definierten Zeitraum</span>
+      <span class="badge">Sortierlogik denkbar nach Trending, letzter Aktivität, Erstellungsdatum</span>
+    </div>
+  </section>
+
+  <section class="card section">
+    <h2 class="section-title">Alle Diskussionskanäle</h2>
+    <p class="section-subtitle">
+      Hier kannst du für die Demo direkt auf die zuvor erstellten Diskussionskanäle verlinken.
+    </p>
+
+    <div class="channels-grid">
+
+      <!-- Kanal 1 -->
+      <article class="channel-card">
+        <div class="channel-top">
+          <div class="channel-top-row">
+            <div>
+              <h3 class="channel-title">BB-0123 · Anschrift · v1.2.0</h3>
+              <p class="channel-subtitle">
+                Diskussion zur aktuellen Version des Building Blocks „Anschrift“ mit Fokus auf
+                Adresszusatz, internationale Adressen und Zustellinformationen.
+              </p>
+            </div>
+            <div class="badge-row" style="margin-top:0;">
+              <span class="mini-badge green">Trending</span>
+            </div>
+          </div>
+
+          <div class="channel-meta">
+            <span class="mini-badge primary">Type: Request for Change</span>
+            <span class="mini-badge green">Status: Öffentliche Konsultation</span>
+            <span class="mini-badge purple">Standard: XZuFi</span>
+          </div>
+        </div>
+
+        <div class="channel-body">
+          <div class="channel-info-grid">
+            <div class="info-box">
+              <div class="info-label">Verantwortlichkeit</div>
+              <div class="info-value">eCH Fachgruppe Meldewesen</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Erstellt am</div>
+              <div class="info-value">12.03.2026</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Letzter Post</div>
+              <div class="info-value">Heute, 09:14 Uhr</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Aktivität</div>
+              <div class="info-value">12 Posts in den letzten 7 Tagen</div>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <span class="activity-chip">Posts total: 38</span>
+            <span class="activity-chip">Abonnenten: 27</span>
+            <span class="activity-chip">Öffentliche Beiträge: 24</span>
+            <span class="activity-chip">Private Beiträge: 14</span>
+          </div>
+
+          <div class="channel-footer">
+            <span class="muted-text">Kanal-ID: DISC-BB0123-V120</span>
+            <a class="btn-link" href="bb1/bb1_discussion.html">Kanal öffnen</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kanal 2 -->
+      <article class="channel-card">
+        <div class="channel-top">
+          <div class="channel-top-row">
+            <div>
+              <h3 class="channel-title">BB-0044 · Organisation · v2.0.0</h3>
+              <p class="channel-subtitle">
+                Diskussion zur Erweiterung organisationsbezogener Metadaten und zur Kompatibilität
+                mit Identifikatoren und Zuständigkeitsstrukturen.
+              </p>
+            </div>
+          </div>
+
+          <div class="channel-meta">
+            <span class="mini-badge primary">Type: Frage</span>
+            <span class="mini-badge orange">Status: Inhaltliche QS2</span>
+            <span class="mini-badge purple">Standard: XUnternehmen</span>
+          </div>
+        </div>
+
+        <div class="channel-body">
+          <div class="channel-info-grid">
+            <div class="info-box">
+              <div class="info-label">Verantwortlichkeit</div>
+              <div class="info-value">eCH Fachgruppe Wirtschaftsdaten</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Erstellt am</div>
+              <div class="info-value">22.02.2026</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Letzter Post</div>
+              <div class="info-value">Gestern, 16:42 Uhr</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Aktivität</div>
+              <div class="info-value">9 Posts in den letzten 7 Tagen</div>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <span class="activity-chip">Posts total: 29</span>
+            <span class="activity-chip">Abonnenten: 18</span>
+            <span class="activity-chip">Offene Punkte: 4</span>
+          </div>
+
+          <div class="channel-footer">
+            <span class="muted-text">Kanal-ID: DISC-BB0044-V200</span>
+            <a class="btn-link" href="bb0044_organisation_v2_discussion.html">Kanal öffnen</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kanal 3 -->
+      <article class="channel-card">
+        <div class="channel-top">
+          <div class="channel-top-row">
+            <div>
+              <h3 class="channel-title">BB-0091 · Person · v1.8.0</h3>
+              <p class="channel-subtitle">
+                Kanal zur Diskussion der Wiederverwendung personenbezogener Kernelemente in
+                mehreren Standards sowie zur fachlichen Abgrenzung einzelner Attribute.
+              </p>
+            </div>
+          </div>
+
+          <div class="channel-meta">
+            <span class="mini-badge primary">Type: Request for Change</span>
+            <span class="mini-badge purple">Status: Einarbeitung Rückmeldungen</span>
+            <span class="mini-badge purple">Standard: XGewerbeanzeige</span>
+          </div>
+        </div>
+
+        <div class="channel-body">
+          <div class="channel-info-grid">
+            <div class="info-box">
+              <div class="info-label">Verantwortlichkeit</div>
+              <div class="info-value">Interdisziplinäres Reviewteam</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Erstellt am</div>
+              <div class="info-value">04.02.2026</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Letzter Post</div>
+              <div class="info-value">Vor 2 Tagen</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Aktivität</div>
+              <div class="info-value">7 Posts in den letzten 7 Tagen</div>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <span class="activity-chip">Posts total: 46</span>
+            <span class="activity-chip">Abonnenten: 34</span>
+            <span class="activity-chip">Erledigte Punkte: 6</span>
+          </div>
+
+          <div class="channel-footer">
+            <span class="muted-text">Kanal-ID: DISC-BB0091-V180</span>
+            <a class="btn-link" href="bb0091_person_v1_8_discussion.html">Kanal öffnen</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kanal 4 -->
+      <article class="channel-card">
+        <div class="channel-top">
+          <div class="channel-top-row">
+            <div>
+              <h3 class="channel-title">BB-0207 · Parzelle · v0.9.0</h3>
+              <p class="channel-subtitle">
+                Frühe Diskussion zur Pilotversion für Planungskontexte mit Fokus auf
+                Georeferenzierung, Schnittstellen und Modellierungstiefe.
+              </p>
+            </div>
+          </div>
+
+          <div class="channel-meta">
+            <span class="mini-badge primary">Type: Frage</span>
+            <span class="mini-badge red">Status: Überprüfung</span>
+            <span class="mini-badge purple">Standard: XPlanverfahren</span>
+          </div>
+        </div>
+
+        <div class="channel-body">
+          <div class="channel-info-grid">
+            <div class="info-box">
+              <div class="info-label">Verantwortlichkeit</div>
+              <div class="info-value">eCH Fachgruppe Planung</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Erstellt am</div>
+              <div class="info-value">18.01.2026</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Letzter Post</div>
+              <div class="info-value">Vor 9 Tagen</div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-label">Aktivität</div>
+              <div class="info-value">3 Posts in den letzten 30 Tagen</div>
+            </div>
+          </div>
+
+          <div class="activity-row">
+            <span class="activity-chip">Posts total: 11</span>
+            <span class="activity-chip">Abonnenten: 8</span>
+            <span class="activity-chip">Pilotkanal</span>
+          </div>
+
+          <div class="channel-footer">
+            <span class="muted-text">Kanal-ID: DISC-BB0207-V090</span>
+            <a class="btn-link" href="bb0207_parzelle_v0_9_discussion.html">Kanal öffnen</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="empty-note" style="margin-top:18px;">
+      Für die Demo kannst du beliebig viele weitere Kanal-Karten ergänzen. Am wichtigsten ist,
+      dass die Links der Buttons direkt auf die von uns zuvor erstellten Diskussionsseiten zeigen.
+    </div>
+  </section>
+
+</div>
+		
+		
+		
+	</td>
+	<td width="100"></td>
+	</tr>	  
+	  	  
+  </tbody>	
+</table>
+	
+</body>
+</html>

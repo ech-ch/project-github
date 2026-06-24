@@ -1,0 +1,1558 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>eCH Standards</title>
+<link rel="stylesheet" href="css/ech-style.css">
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td width="100"></td>
+      <td>
+        <a href="index.html"><img src="img/logo-ech.svg" alt="" width="300"></a>
+      </td>
+      <td></td>
+      <td></td>
+      <td width="100"></td>
+    </tr>
+
+    <tr>
+	<td width="100"></td>
+      <td width="1029"></td>
+		
+	  <td width="150">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="normbrowser.html">NormBrowser</a>
+
+        </div>
+      </td>
+
+      <td width="100">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Explorer</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="interop_matrix.html">Interopmatrix</a></li>
+            <li><a href="http://localhost:7474/browser/">Graph</a></li>
+          </ul>
+
+        </div>
+      </td>
+
+      <td width="200">
+
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Forum</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="discussions.html">All</a></li>
+            <li><a href="discussions.html">eCH Private</a></li>
+          </ul>
+
+        </div>
+
+      </td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td width="100"></td>
+    </tr>
+
+    <tr height="50">
+      <td width="100" bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1">
+        <a class="dropdown-link" href="index.html">NormGraph</a> »
+        <a class="dropdown-link" href="index.html">Explorer</a> »
+        <a class="dropdown-link" href="explorer_matrix.html">Interopmatrix</a>
+      </td>
+      <td bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"></td>
+      <td width="100" bgcolor="#f1f2f1"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td width="100"></td>
+    </tr>
+  </tbody>
+</table>
+
+<img src="img/chatgpt.png" alt=""/>
+
+<table width="100%" border="0">
+  <tbody>
+    <tr>
+      <td width="100"></td>
+      <td><h1>Interopmatrix</h1></td>
+    </tr>
+    <tr>
+      <td width="100"></td>
+      <td>
+
+<section class="interopmatrix-section">
+  <div class="interopmatrix-shell">
+    <div class="interop-toolbar">
+      <div class="interop-toolbar-left">
+        <p class="interop-subtitle">
+          Nutzung von Building Blocks / Kernkomponenten über verschiedene Standards hinweg
+        </p>
+      </div>
+
+      <div class="interop-toolbar-right">
+        <label class="interop-search">
+          <span class="interop-search-icon">⌕</span>
+          <input
+            type="text"
+            id="interopSearch"
+            placeholder="Nach Standard oder Building Block suchen …"
+            aria-label="Interopmatrix durchsuchen"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="interop-filters" id="interopFilters"></div>
+
+    <div class="interop-legend">
+      <span class="legend-item">
+        <span class="legend-dot dot-used"></span> verwendet
+      </span>
+      <span class="legend-item">
+        <span class="legend-dot dot-partial"></span> teilweise / profiliert
+      </span>
+      <span class="legend-item">
+        <span class="legend-dot dot-empty"></span> nicht verwendet
+      </span>
+    </div>
+
+    <div class="interop-matrix-wrap">
+      <table class="interop-matrix" id="interopMatrix">
+        <thead id="interopHead"></thead>
+        <tbody id="interopBody"></tbody>
+      </table>
+    </div>
+
+    <div class="interop-detail" id="interopDetail">
+      <strong>Hinweis:</strong> Klicke auf eine Zelle, um Details anzuzeigen.
+    </div>
+  </div>
+</section>
+
+<style>
+  .interopmatrix-section {
+    --im-bg: #ffffff;
+    --im-surface: #ffffff;
+    --im-surface-soft: #f5f7f8;
+    --im-border: #d9e0e5;
+    --im-text: #1f2a37;
+    --im-muted: #6b7280;
+    --im-accent: #0071bb;
+    --im-accent-soft: #eaf4fb;
+    --im-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --im-radius: 14px;
+    --im-sticky-left-width: 240px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--im-text);
+  }
+
+  .interopmatrix-shell {
+    background: var(--im-bg);
+    border: 1px solid var(--im-border);
+    border-radius: var(--im-radius);
+    box-shadow: var(--im-shadow);
+    overflow: hidden;
+  }
+
+  .interop-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 20px 14px 20px;
+    border-bottom: 1px solid var(--im-border);
+    background: linear-gradient(to bottom, #fff, #fcfdff);
+  }
+
+  .interop-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--im-muted);
+  }
+
+  .interop-toolbar-right {
+    min-width: 320px;
+  }
+
+  .interop-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--im-border);
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .interop-search:focus-within {
+    border-color: var(--im-accent);
+    box-shadow: 0 0 0 3px rgba(0, 113, 187, 0.12);
+  }
+
+  .interop-search-icon {
+    color: var(--im-muted);
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .interop-search input {
+    border: 0;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    color: var(--im-text);
+  }
+
+  .interop-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 20px 10px 20px;
+    border-bottom: 1px solid var(--im-border);
+    background: var(--im-surface);
+  }
+
+  .interop-chip {
+    appearance: none;
+    border: 1px solid var(--im-border);
+    background: #fff;
+    color: var(--im-text);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .interop-chip:hover {
+    border-color: var(--im-accent);
+    color: var(--im-accent);
+  }
+
+  .interop-chip.active {
+    background: var(--im-accent-soft);
+    border-color: var(--im-accent);
+    color: var(--im-accent);
+    font-weight: 700;
+  }
+
+  .interop-legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--im-border);
+    background: var(--im-surface-soft);
+    font-size: 13px;
+    color: var(--im-muted);
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .dot-used {
+    background: var(--im-accent);
+  }
+
+  .dot-partial {
+    background: #f2c94c;
+  }
+
+  .dot-empty {
+    background: #dfe5ea;
+  }
+
+  .interop-matrix-wrap {
+    overflow: auto;
+    max-height: 70vh;
+    background: #fff;
+  }
+
+  .interop-matrix {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: max-content;
+    min-width: 100%;
+    table-layout: fixed;
+  }
+
+  .interop-matrix.no-expanded {
+    table-layout: fixed;
+  }
+
+  .interop-matrix.no-expanded .col-group-head,
+  .interop-matrix.no-expanded .group-summary {
+    width: var(--uniform-col-width);
+    min-width: var(--uniform-col-width);
+    max-width: var(--uniform-col-width);
+  }
+
+  .interop-matrix th,
+  .interop-matrix td {
+    border-right: 1px solid var(--im-border);
+    border-bottom: 1px solid var(--im-border);
+    padding: 0;
+    text-align: center;
+    background: #fff;
+  }
+
+  .interop-matrix thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #f8fafc;
+  }
+
+  .interop-matrix .corner {
+    left: 0;
+    z-index: 8;
+    position: sticky;
+    width: var(--im-sticky-left-width);
+    min-width: var(--im-sticky-left-width);
+    max-width: var(--im-sticky-left-width);
+    background: #f1f5f9;
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .interop-matrix .row-head {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    min-width: var(--im-sticky-left-width);
+    max-width: var(--im-sticky-left-width);
+    text-align: left;
+    padding: 12px 16px;
+    background: #fcfdff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .interop-matrix .row-head small {
+    display: block;
+    margin-top: 4px;
+    color: var(--im-muted);
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .interop-matrix .col-group-head {
+    min-width: 72px;
+    background: #eef4f8;
+    border-bottom: 1px solid var(--im-border);
+    padding: 0;
+  }
+
+  .col-group-toggle {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--im-text);
+    background: #eef4f8;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .col-group-toggle:hover {
+    background: #e4eef6;
+  }
+
+  .col-group-toggle .toggle-symbol {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--im-accent);
+  }
+
+  .col-group-toggle .toggle-label {
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .col-group-toggle.used {
+    background: rgba(0, 113, 187, 0.08);
+  }
+
+  .col-group-toggle.partial {
+    background: rgba(242, 201, 76, 0.18);
+  }
+
+  .col-group-toggle.empty {
+    background: #eef2f5;
+  }
+
+  .interop-matrix .col-head,
+  .interop-matrix .cell {
+    transition:
+      width 0.2s ease,
+      min-width 0.2s ease,
+      max-width 0.2s ease,
+      background 0.12s ease;
+    overflow: hidden;
+  }
+
+  .interop-matrix .group-summary {
+    width: 52px;
+    min-width: 52px;
+    max-width: 52px;
+    background: #f7fafc;
+    transition:
+      width 0.2s ease,
+      min-width 0.2s ease,
+      max-width 0.2s ease;
+  }
+
+  .interop-matrix .group-summary.is-expanded {
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+  }
+
+  .interop-matrix .sub-col-head,
+  .interop-matrix .sub-cell {
+    width: 52px;
+    min-width: 52px;
+    max-width: 52px;
+  }
+
+  .interop-matrix .group-summary > div,
+  .interop-matrix .sub-col-head > div {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    padding: 14px 8px;
+    min-height: 180px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .interop-matrix .cell {
+    height: 46px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .interop-matrix .cell:hover {
+    background: #f8fbfe;
+  }
+
+  .interop-matrix .cell a,
+  .interop-matrix .cell button {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .interop-matrix .cell a {
+    text-decoration: none;
+  }
+
+  .interop-matrix .cell.has-link a::after {
+    content: "↗";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 10px;
+    line-height: 1;
+    color: var(--im-accent);
+    opacity: 0.9;
+  }
+
+  .interop-matrix .cell.has-link a::before {
+    content: "BB-Seite öffnen";
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1f2a37;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    padding: 6px 8px;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 20;
+  }
+
+  .interop-matrix .cell.has-link a:hover::before,
+  .interop-matrix .cell.has-link a:focus::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .interop-matrix .cell.has-link a:hover .status-dot,
+  .interop-matrix .cell.has-link a:focus .status-dot {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 4px rgba(0, 113, 187, 0.12);
+  }
+
+  .interop-matrix .status-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .interop-matrix .used .status-dot {
+    background: var(--im-accent);
+  }
+
+  .interop-matrix .partial .status-dot {
+    background: #f2c94c;
+  }
+
+  .interop-matrix .empty .status-dot {
+    background: #dfe5ea;
+  }
+
+  .interop-matrix .group-cell {
+    background: #fbfdff;
+  }
+
+  .interop-matrix .sub-cell {
+    background: #ffffff;
+  }
+
+  .interop-detail {
+    border-top: 1px solid var(--im-border);
+    padding: 16px 20px 18px 20px;
+    background: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .interop-detail .detail-meta {
+    margin-top: 8px;
+    color: var(--im-muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 900px) {
+    .interop-toolbar {
+      flex-direction: column;
+    }
+
+    .interop-toolbar-right {
+      min-width: 100%;
+      width: 100%;
+    }
+
+    .interopmatrix-shell {
+      border-radius: 10px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  const standards = [
+    { id: "ech0006", name: "eCH-0006 Ausländerkategorien", category: "Meldewesen" },
+    { id: "ech0007", name: "eCH-0007 Gemeinden", category: "Meldewesen" },
+    { id: "ech0008", name: "eCH-0008 Staaten und Gebiete", category: "Meldewesen" },
+    { id: "ech0010", name: "eCH-0010 Postadresse", category: "Meldewesen" },
+    { id: "ech0011", name: "eCH-0011 Personendaten", category: "Meldewesen" },
+    { id: "ech0021", name: "eCH-0021 Personenzusatzdaten", category: "Meldewesen" },
+    { id: "ech0044", name: "eCH-0044 Personenidentifikationen", category: "Meldewesen" }
+  ];
+
+const columnGroups = [
+  {
+    id: "personenidentifikation",
+    name: "Personenidentifikation",
+    group: "eCH-0044",
+    children: [
+      { id: "personId", name: "Personenidentifikator", xml: "personId" },
+      { id: "vn", name: "AHV-Versichertennummer", xml: "vn" },
+      { id: "officialName", name: "Familienname", xml: "officialName" },
+      { id: "firstName", name: "Vorname", xml: "firstName" },
+      { id: "originalName", name: "Ledigname", xml: "originalName" },
+      { id: "sex", name: "Geschlecht", xml: "sex" },
+      { id: "dateOfBirth", name: "Geburtsdatum", xml: "dateOfBirth" }
+    ]
+  },
+  {
+    id: "namensdaten",
+    name: "Namensdaten",
+    group: "eCH-0011",
+    children: [
+      { id: "officialName", name: "Familienname", xml: "officialName" },
+      { id: "firstName", name: "Vorname", xml: "firstName" },
+      { id: "originalName", name: "Ledigname", xml: "originalName" },
+      { id: "allianceName", name: "Allianzname", xml: "allianceName" },
+      { id: "aliasName", name: "Aliasname", xml: "aliasName" },
+      { id: "otherName", name: "Weiterer amtlicher Name", xml: "otherName" },
+      { id: "callName", name: "Rufname", xml: "callName" },
+      { id: "nameOnForeignPassport", name: "Name im ausländischen Pass", xml: "nameOnForeignPassport" },
+      { id: "declaredForeignName", name: "Deklarierter ausländischer Name", xml: "declaredForeignName" },
+      { id: "foreignerName", name: "Ausländischer Name", xml: "foreignerName" }
+    ]
+  },
+  {
+    id: "geburts_und_basisdaten",
+    name: "Geburts- und Basisdaten",
+    group: "eCH-0011",
+    children: [
+      { id: "dateOfBirth", name: "Geburtsdatum", xml: "dateOfBirth" },
+      { id: "placeOfBirth", name: "Geburtsort", xml: "placeOfBirth" },
+      { id: "sex", name: "Geschlecht", xml: "sex" }
+    ]
+  },
+  {
+    id: "staatsangehoerigkeit_und_herkunft",
+    name: "Staatsangehörigkeit und Herkunft",
+    group: "eCH-0008 / eCH-0011",
+    children: [
+      { id: "nationalityStatus", name: "Status Staatsangehörigkeit", xml: "nationalityStatus" },
+      { id: "country", name: "Staat", xml: "country" },
+      { id: "countryId", name: "Staaten-ID", xml: "countryId" },
+      { id: "countryIdISO2", name: "ISO-Ländercode", xml: "countryIdISO2" },
+      { id: "countryNameShort", name: "Kurzbezeichnung Staat", xml: "countryNameShort" },
+      { id: "originName", name: "Heimatort", xml: "originName" },
+      { id: "placeOfOriginId", name: "Heimatort-ID", xml: "placeOfOriginId" },
+      { id: "canton", name: "Heimatkanton", xml: "canton" },
+      { id: "historyMunicipalityId", name: "Historisierte Gemeindenummer", xml: "historyMunicipalityId" }
+    ]
+  },
+  {
+    id: "adresse_und_kontakt",
+    name: "Adresse und Kontakt",
+    group: "eCH-0010",
+    children: [
+      { id: "addressLine1", name: "Adresszeile 1", xml: "addressLine1" },
+      { id: "addressLine2", name: "Adresszeile 2", xml: "addressLine2" },
+      { id: "street", name: "Strasse", xml: "street" },
+      { id: "houseNumber", name: "Hausnummer", xml: "houseNumber" },
+      { id: "dwellingNumber", name: "Wohnungsnummer", xml: "dwellingNumber" },
+      { id: "postOfficeBoxNumber", name: "Postfachnummer", xml: "postOfficeBoxNumber" },
+      { id: "postOfficeBoxText", name: "Postfachtext", xml: "postOfficeBoxText" },
+      { id: "swissZipCode", name: "Postleitzahl (CH)", xml: "swissZipCode" },
+      { id: "swissZipCodeAddOn", name: "PLZ-Zusatzziffer", xml: "swissZipCodeAddOn" },
+      { id: "swissZipCodeId", name: "PLZ-Ordnungsziffer", xml: "swissZipCodeId" },
+      { id: "foreignZipCode", name: "Postleitzahl Ausland", xml: "foreignZipCode" },
+      { id: "locality", name: "Gebiet", xml: "locality" },
+      { id: "town", name: "Ortsname", xml: "town" },
+      { id: "country_address", name: "Staat", xml: "country" },
+      { id: "addressValidFrom", name: "Adresse gültig ab", xml: "addressValidFrom" },
+      { id: "addressValidTo", name: "Adresse gültig bis", xml: "addressValidTo" }
+    ]
+  },
+  {
+    id: "aufenthalt_und_meldeverhaeltnis",
+    name: "Aufenthalt und Meldeverhältnis",
+    group: "eCH-0006 / eCH-0007 / eCH-0011",
+    children: [
+      { id: "reportingMunicipality", name: "Meldegemeinde", xml: "reportingMunicipality" },
+      { id: "municipalityId", name: "Gemeindekennung", xml: "municipalityId" },
+      { id: "municipalityName", name: "Gemeindename", xml: "municipalityName" },
+      { id: "cantonAbbreviation", name: "Kantonskürzel", xml: "cantonAbbreviation" },
+      { id: "historyMunicipalityId_residence", name: "Historisierte Gemeindenummer", xml: "historyMunicipalityId" },
+      { id: "typeOfResidence", name: "Art des Meldeverhältnisses", xml: "typeOfResidence" },
+      { id: "arrivalDate", name: "Zuzugsdatum", xml: "arrivalDate" },
+      { id: "departureDate", name: "Wegzugsdatum", xml: "departureDate" },
+      { id: "comesFrom", name: "Herkunftsort", xml: "comesFrom" },
+      { id: "goesTo", name: "Zielort", xml: "goesTo" },
+      { id: "dwellingAddress", name: "Wohnadresse", xml: "dwellingAddress" },
+      { id: "residencePermit", name: "Ausländerkategorie", xml: "residencePermit" },
+      { id: "residencePermitValidFrom", name: "Ausländerkategorie gültig ab", xml: "residencePermitValidFrom" },
+      { id: "residencePermitTill", name: "Ausländerkategorie gültig bis", xml: "residencePermitTill" },
+      { id: "entryDate", name: "Einreisedatum", xml: "entryDate" }
+    ]
+  },
+  {
+    id: "personenzusatzdaten_und_beziehungen",
+    name: "Personenzusatzdaten und Beziehungen",
+    group: "eCH-0021",
+    children: [
+      { id: "nameOfParent", name: "Elternname", xml: "nameOfParent" },
+      { id: "partner", name: "Partnerin / Partner", xml: "partner" },
+      { id: "parentalRelationship", name: "Elternbeziehung", xml: "parentalRelationship" },
+      { id: "guardianRelationship", name: "Vormundschaft / Beistandschaft", xml: "guardianRelationship" },
+      { id: "typeOfRelationship", name: "Beziehungstyp", xml: "typeOfRelationship" },
+      { id: "jobTitle", name: "Berufsbezeichnung", xml: "jobTitle" },
+      { id: "employer", name: "Arbeitgeber", xml: "employer" },
+      { id: "placeOfWork", name: "Arbeitsort", xml: "placeOfWork" },
+      { id: "addressLock", name: "Adresssperre", xml: "addressLock" },
+      { id: "dataLock", name: "Datensperre", xml: "dataLock" },
+      { id: "paperLock", name: "Akten- / Papiersperre", xml: "paperLock" },
+      { id: "naturalizationDate", name: "Einbürgerungsdatum", xml: "naturalizationDate" },
+      { id: "expatriationDate", name: "Ausbürgerungsdatum", xml: "expatriationDate" }
+    ]
+  }
+];
+
+  const usageMatrix = {
+  ech0006: {
+    personId: "empty",
+    vn: "empty",
+    officialName: "empty",
+    firstName: "empty",
+    originalName: "empty",
+    sex: "empty",
+    dateOfBirth: "empty",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "empty",
+    countryId: "empty",
+    countryIdISO2: "empty",
+    countryNameShort: "empty",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "empty",
+    addressLine2: "empty",
+    street: "empty",
+    houseNumber: "empty",
+    dwellingNumber: "empty",
+    postOfficeBoxNumber: "empty",
+    postOfficeBoxText: "empty",
+    swissZipCode: "empty",
+    swissZipCodeAddOn: "empty",
+    swissZipCodeId: "empty",
+    foreignZipCode: "empty",
+    locality: "empty",
+    town: "empty",
+    country_address: "empty",
+    addressValidFrom: "empty",
+    addressValidTo: "empty",
+
+    reportingMunicipality: "empty",
+    municipalityId: "empty",
+    municipalityName: "empty",
+    cantonAbbreviation: "empty",
+    historyMunicipalityId_residence: "empty",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "used",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  },
+
+  ech0007: {
+    personId: "empty",
+    vn: "empty",
+    officialName: "empty",
+    firstName: "empty",
+    originalName: "empty",
+    sex: "empty",
+    dateOfBirth: "empty",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "empty",
+    countryId: "empty",
+    countryIdISO2: "empty",
+    countryNameShort: "empty",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "empty",
+    addressLine2: "empty",
+    street: "empty",
+    houseNumber: "empty",
+    dwellingNumber: "empty",
+    postOfficeBoxNumber: "empty",
+    postOfficeBoxText: "empty",
+    swissZipCode: "empty",
+    swissZipCodeAddOn: "empty",
+    swissZipCodeId: "empty",
+    foreignZipCode: "empty",
+    locality: "empty",
+    town: "empty",
+    country_address: "empty",
+    addressValidFrom: "empty",
+    addressValidTo: "empty",
+
+    reportingMunicipality: "empty",
+    municipalityId: "used",
+    municipalityName: "used",
+    cantonAbbreviation: "used",
+    historyMunicipalityId_residence: "used",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "empty",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  },
+
+  ech0008: {
+    personId: "empty",
+    vn: "empty",
+    officialName: "empty",
+    firstName: "empty",
+    originalName: "empty",
+    sex: "empty",
+    dateOfBirth: "empty",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "used",
+    countryId: "used",
+    countryIdISO2: "used",
+    countryNameShort: "used",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "empty",
+    addressLine2: "empty",
+    street: "empty",
+    houseNumber: "empty",
+    dwellingNumber: "empty",
+    postOfficeBoxNumber: "empty",
+    postOfficeBoxText: "empty",
+    swissZipCode: "empty",
+    swissZipCodeAddOn: "empty",
+    swissZipCodeId: "empty",
+    foreignZipCode: "empty",
+    locality: "empty",
+    town: "empty",
+    country_address: "empty",
+    addressValidFrom: "empty",
+    addressValidTo: "empty",
+
+    reportingMunicipality: "empty",
+    municipalityId: "empty",
+    municipalityName: "empty",
+    cantonAbbreviation: "empty",
+    historyMunicipalityId_residence: "empty",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "empty",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  },
+
+  ech0010: {
+    personId: "empty",
+    vn: "empty",
+    officialName: "partial",
+    firstName: "partial",
+    originalName: "empty",
+    sex: "empty",
+    dateOfBirth: "empty",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "empty",
+    countryId: "used",
+    countryIdISO2: "used",
+    countryNameShort: "used",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "used",
+    addressLine2: "used",
+    street: "used",
+    houseNumber: "used",
+    dwellingNumber: "used",
+    postOfficeBoxNumber: "used",
+    postOfficeBoxText: "used",
+    swissZipCode: "used",
+    swissZipCodeAddOn: "used",
+    swissZipCodeId: "used",
+    foreignZipCode: "used",
+    locality: "used",
+    town: "used",
+    country_address: "used",
+    addressValidFrom: "used",
+    addressValidTo: "used",
+
+    reportingMunicipality: "empty",
+    municipalityId: "empty",
+    municipalityName: "empty",
+    cantonAbbreviation: "empty",
+    historyMunicipalityId_residence: "empty",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "empty",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  },
+
+  ech0011: {
+    personId: "used",
+    vn: "used",
+    officialName: "used",
+    firstName: "used",
+    originalName: "used",
+    sex: "used",
+    dateOfBirth: "used",
+
+    allianceName: "used",
+    aliasName: "used",
+    otherName: "used",
+    callName: "used",
+    nameOnForeignPassport: "used",
+    declaredForeignName: "used",
+    foreignerName: "used",
+
+    placeOfBirth: "used",
+
+    nationalityStatus: "used",
+    country: "used",
+    countryId: "partial",
+    countryIdISO2: "partial",
+    countryNameShort: "partial",
+    originName: "used",
+    placeOfOriginId: "used",
+    canton: "used",
+    historyMunicipalityId: "used",
+
+    addressLine1: "partial",
+    addressLine2: "partial",
+    street: "partial",
+    houseNumber: "partial",
+    dwellingNumber: "partial",
+    postOfficeBoxNumber: "partial",
+    postOfficeBoxText: "partial",
+    swissZipCode: "partial",
+    swissZipCodeAddOn: "partial",
+    swissZipCodeId: "partial",
+    foreignZipCode: "partial",
+    locality: "partial",
+    town: "partial",
+    country_address: "partial",
+    addressValidFrom: "partial",
+    addressValidTo: "partial",
+
+    reportingMunicipality: "used",
+    municipalityId: "used",
+    municipalityName: "used",
+    cantonAbbreviation: "used",
+    historyMunicipalityId_residence: "used",
+    typeOfResidence: "used",
+    arrivalDate: "used",
+    departureDate: "used",
+    comesFrom: "used",
+    goesTo: "used",
+    dwellingAddress: "used",
+    residencePermit: "used",
+    residencePermitValidFrom: "used",
+    residencePermitTill: "used",
+    entryDate: "used",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  },
+
+  ech0021: {
+    personId: "partial",
+    vn: "partial",
+    officialName: "empty",
+    firstName: "empty",
+    originalName: "empty",
+    sex: "empty",
+    dateOfBirth: "empty",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "empty",
+    countryId: "empty",
+    countryIdISO2: "empty",
+    countryNameShort: "empty",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "empty",
+    addressLine2: "empty",
+    street: "empty",
+    houseNumber: "empty",
+    dwellingNumber: "empty",
+    postOfficeBoxNumber: "empty",
+    postOfficeBoxText: "empty",
+    swissZipCode: "empty",
+    swissZipCodeAddOn: "empty",
+    swissZipCodeId: "empty",
+    foreignZipCode: "empty",
+    locality: "empty",
+    town: "empty",
+    country_address: "empty",
+    addressValidFrom: "empty",
+    addressValidTo: "empty",
+
+    reportingMunicipality: "empty",
+    municipalityId: "empty",
+    municipalityName: "empty",
+    cantonAbbreviation: "empty",
+    historyMunicipalityId_residence: "empty",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "empty",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "used",
+    partner: "used",
+    parentalRelationship: "used",
+    guardianRelationship: "used",
+    typeOfRelationship: "used",
+    jobTitle: "used",
+    employer: "used",
+    placeOfWork: "used",
+    addressLock: "used",
+    dataLock: "used",
+    paperLock: "used",
+    naturalizationDate: "used",
+    expatriationDate: "used"
+  },
+
+  ech0044: {
+    personId: "used",
+    vn: "used",
+    officialName: "used",
+    firstName: "used",
+    originalName: "used",
+    sex: "used",
+    dateOfBirth: "used",
+
+    allianceName: "empty",
+    aliasName: "empty",
+    otherName: "empty",
+    callName: "empty",
+    nameOnForeignPassport: "empty",
+    declaredForeignName: "empty",
+    foreignerName: "empty",
+
+    placeOfBirth: "empty",
+
+    nationalityStatus: "empty",
+    country: "empty",
+    countryId: "empty",
+    countryIdISO2: "empty",
+    countryNameShort: "empty",
+    originName: "empty",
+    placeOfOriginId: "empty",
+    canton: "empty",
+    historyMunicipalityId: "empty",
+
+    addressLine1: "empty",
+    addressLine2: "empty",
+    street: "empty",
+    houseNumber: "empty",
+    dwellingNumber: "empty",
+    postOfficeBoxNumber: "empty",
+    postOfficeBoxText: "empty",
+    swissZipCode: "empty",
+    swissZipCodeAddOn: "empty",
+    swissZipCodeId: "empty",
+    foreignZipCode: "empty",
+    locality: "empty",
+    town: "empty",
+    country_address: "empty",
+    addressValidFrom: "empty",
+    addressValidTo: "empty",
+
+    reportingMunicipality: "empty",
+    municipalityId: "empty",
+    municipalityName: "empty",
+    cantonAbbreviation: "empty",
+    historyMunicipalityId_residence: "empty",
+    typeOfResidence: "empty",
+    arrivalDate: "empty",
+    departureDate: "empty",
+    comesFrom: "empty",
+    goesTo: "empty",
+    dwellingAddress: "empty",
+    residencePermit: "empty",
+    residencePermitValidFrom: "empty",
+    residencePermitTill: "empty",
+    entryDate: "empty",
+
+    nameOfParent: "empty",
+    partner: "empty",
+    parentalRelationship: "empty",
+    guardianRelationship: "empty",
+    typeOfRelationship: "empty",
+    jobTitle: "empty",
+    employer: "empty",
+    placeOfWork: "empty",
+    addressLock: "empty",
+    dataLock: "empty",
+    paperLock: "empty",
+    naturalizationDate: "empty",
+    expatriationDate: "empty"
+  }
+};
+
+  const cellLinks = {
+    "ech0006-personenidentifikation": "bb1/bb1.html",
+    "ech0007-personenidentifikation": "bb2/bb2.html",
+    "ech0008-personenidentifikation": "bb3/bb3.html"
+  };
+
+  const matrixTable = document.getElementById("interopMatrix");
+  const matrixHead = document.getElementById("interopHead");
+  const matrixBody = document.getElementById("interopBody");
+  const filtersEl = document.getElementById("interopFilters");
+  const searchEl = document.getElementById("interopSearch");
+  const detailEl = document.getElementById("interopDetail");
+
+  const categories = ["Alle", ...new Set(standards.map(s => s.category))];
+  let activeCategory = "Alle";
+  let searchTerm = "";
+  const expandedGroups = new Set();
+
+  function renderFilters() {
+    filtersEl.innerHTML = "";
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "interop-chip" + (cat === activeCategory ? " active" : "");
+      btn.textContent = cat;
+      btn.type = "button";
+      btn.addEventListener("click", () => {
+        activeCategory = cat;
+        renderFilters();
+        renderMatrix();
+      });
+      filtersEl.appendChild(btn);
+    });
+  }
+
+  function getVisibleStandards() {
+    return standards.filter(s => activeCategory === "Alle" || s.category === activeCategory);
+  }
+
+  function getFilteredGroups() {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return columnGroups;
+
+    return columnGroups
+      .map(group => {
+        const groupMatch =
+          group.name.toLowerCase().includes(q) ||
+          group.group.toLowerCase().includes(q);
+
+        const matchingChildren = group.children.filter(child =>
+          child.name.toLowerCase().includes(q)
+        );
+
+        if (groupMatch) return group;
+        if (matchingChildren.length) {
+          return { ...group, children: matchingChildren };
+        }
+        return null;
+      })
+      .filter(Boolean);
+  }
+
+  function labelForStatus(status) {
+    if (status === "used") return "verwendet";
+    if (status === "partial") return "teilweise / profiliert";
+    return "nicht verwendet";
+  }
+
+  function statusClass(status) {
+    return status || "empty";
+  }
+
+function getGroupAggregateStatus(stdId, group) {
+  const values = group.children.map(child => usageMatrix[stdId]?.[child.id] || "empty");
+
+  const usedCount = values.filter(v => v === "used").length;
+  const partialCount = values.filter(v => v === "partial").length;
+
+  if (usedCount === values.length && values.length > 0) {
+    return "used";
+  }
+
+  if (usedCount > 0 || partialCount > 0) {
+    return "partial";
+  }
+
+  return "empty";
+}
+
+  function applyUniformCollapsedWidths(visibleGroups, hasExpandedGroups) {
+    const wrap = matrixTable.closest(".interop-matrix-wrap");
+    const section = document.querySelector(".interopmatrix-section");
+
+    if (hasExpandedGroups) {
+      matrixTable.classList.remove("no-expanded");
+      matrixTable.style.removeProperty("--uniform-col-width");
+      return;
+    }
+
+    matrixTable.classList.add("no-expanded");
+
+    const stickyLeftWidth =
+      parseInt(getComputedStyle(section).getPropertyValue("--im-sticky-left-width"), 10) || 240;
+
+    const wrapWidth = wrap.clientWidth || 0;
+    const availableWidth = Math.max(wrapWidth - stickyLeftWidth, 320);
+    const colCount = Math.max(visibleGroups.length, 1);
+    const uniformWidth = Math.floor(availableWidth / colCount);
+
+    matrixTable.style.setProperty("--uniform-col-width", `${uniformWidth}px`);
+  }
+
+  function createCell(std, label, status, isGroupCell, groupId = null) {
+    const td = document.createElement("td");
+    td.className = `cell ${statusClass(status)} ${isGroupCell ? "group-cell" : "sub-cell"}`;
+
+    const key = `${std.id}-${groupId}`;
+    const link = cellLinks[key];
+
+    let element;
+
+    if (link) {
+      td.classList.add("has-link");
+
+      element = document.createElement("a");
+      element.href = link;
+      element.setAttribute("aria-label", `${label} in ${std.name}: BB-Seite öffnen`);
+      element.title = "BB-Seite öffnen";
+    } else {
+      element = document.createElement("button");
+      element.type = "button";
+      element.setAttribute(
+        "aria-label",
+        `${label} in ${std.name}: ${labelForStatus(status)}`
+      );
+
+      element.addEventListener("click", () => {
+        detailEl.innerHTML = `
+          <strong>${std.name}</strong><br>
+          ${isGroupCell ? "Building Block" : "Unter-BB"}: <strong>${label}</strong><br>
+          Status: <strong>${labelForStatus(status)}</strong>
+          <div class="detail-meta">
+            ${isGroupCell ? "Ebene: Hauptspalte" : `Ebene: Unterspalte · Obergruppe: ${groupId}`}
+          </div>
+        `;
+      });
+    }
+
+    element.innerHTML = `<span class="status-dot" aria-hidden="true"></span>`;
+    td.appendChild(element);
+
+    return td;
+  }
+
+  function bindGroupToggleEvents() {
+    document.querySelectorAll(".col-group-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const groupId = btn.dataset.group;
+        if (expandedGroups.has(groupId)) {
+          expandedGroups.delete(groupId);
+        } else {
+          expandedGroups.add(groupId);
+        }
+        renderMatrix();
+      });
+    });
+  }
+
+  function renderMatrix() {
+    const visibleStandards = getVisibleStandards();
+    const visibleGroups = getFilteredGroups();
+
+    matrixHead.innerHTML = "";
+    matrixBody.innerHTML = "";
+
+    const headRow1 = document.createElement("tr");
+    const headRow2 = document.createElement("tr");
+
+    let hasExpandedGroups = false;
+
+    const corner = document.createElement("th");
+    corner.className = "corner";
+    corner.rowSpan = 2;
+    corner.textContent = "Standards";
+    headRow1.appendChild(corner);
+
+    visibleGroups.forEach(group => {
+      const isExpanded = expandedGroups.has(group.id);
+      if (isExpanded) hasExpandedGroups = true;
+
+      const colSpan = isExpanded ? 1 + group.children.length : 1;
+
+      const th = document.createElement("th");
+      th.className = "col-group-head";
+      th.colSpan = colSpan;
+
+      const representativeStandard = visibleStandards[0]?.id || null;
+	  const statusSample = representativeStandard ? getGroupAggregateStatus(representativeStandard, group) : "empty";
+
+      th.innerHTML = `
+        <button type="button" class="col-group-toggle ${statusClass(statusSample)}" data-group="${group.id}">
+          <span class="toggle-symbol">${isExpanded ? "−" : "+"}</span>
+          <span class="toggle-label">${group.name}</span>
+        </button>
+      `;
+      headRow1.appendChild(th);
+
+      const summaryTh = document.createElement("th");
+      summaryTh.className = "col-head group-summary";
+      if (isExpanded) summaryTh.classList.add("is-expanded");
+      summaryTh.innerHTML = `<div>${group.name}</div>`;
+      headRow2.appendChild(summaryTh);
+
+      if (isExpanded) {
+        group.children.forEach(child => {
+          const childTh = document.createElement("th");
+          childTh.className = "col-head sub-col-head";
+          childTh.innerHTML = `<div>${child.name}</div>`;
+          headRow2.appendChild(childTh);
+        });
+      }
+    });
+
+    matrixHead.appendChild(headRow1);
+    if (hasExpandedGroups) {
+      matrixHead.appendChild(headRow2);
+    } else {
+      corner.rowSpan = 1;
+    }
+
+    applyUniformCollapsedWidths(visibleGroups, hasExpandedGroups);
+
+    visibleStandards.forEach(std => {
+      const tr = document.createElement("tr");
+
+      const rowHead = document.createElement("th");
+      rowHead.className = "row-head";
+      rowHead.innerHTML = `${std.name}<small>${std.category}</small>`;
+      tr.appendChild(rowHead);
+
+      visibleGroups.forEach(group => {
+        const isExpanded = expandedGroups.has(group.id);
+        const groupStatus = getGroupAggregateStatus(std.id, group);
+        tr.appendChild(createCell(std, group.name, groupStatus, true, group.id));
+
+        if (isExpanded) {
+          group.children.forEach(child => {
+            const childStatus = usageMatrix[std.id]?.[child.id] || "empty";
+            tr.appendChild(createCell(std, child.name, childStatus, false, child.id));
+          });
+        }
+      });
+
+      matrixBody.appendChild(tr);
+    });
+
+    bindGroupToggleEvents();
+  }
+
+  searchEl.addEventListener("input", (e) => {
+    searchTerm = e.target.value || "";
+    renderMatrix();
+  });
+
+  renderFilters();
+  renderMatrix();
+
+  window.addEventListener("resize", () => {
+    renderMatrix();
+  });
+})();
+</script>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# SAGA.ch Knowledge Graph — Python-Abhängigkeiten
+# Installation: pip install -r requirements.txt
+
+# -----------------------------------------------------------------------------
+# Phase 1 — Excel-zu-JSON-Konvertierung
+# -----------------------------------------------------------------------------
+openpyxl>=3.1,<4.0       # Excel-Reader für .xlsx-Dateien (BB_Standard_Import.xlsx)
+
+# -----------------------------------------------------------------------------
+# Phase 2 — Neo4j-Import
+# -----------------------------------------------------------------------------
+neo4j>=5.20,<6.0         # Offizieller Neo4j-Python-Driver für Bolt-Protokoll
+
+# -----------------------------------------------------------------------------
+# Phase 3 — NL-Cypher-Pipeline + Evaluation
+# -----------------------------------------------------------------------------
+anthropic>=0.40          # Anthropic Claude API Client (LLM-Calls)
+jupyter>=1.0             # Notebook-Runtime für nl_to_cypher.ipynb
+pandas>=2.0              # DataFrames für Resultatstabellen im Notebook

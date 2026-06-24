@@ -1,0 +1,199 @@
+{
+  "model": "claude-sonnet-4-6",
+  "n_cases": 12,
+  "korrektheit": 0.8333333333333334,
+  "mean_score": 1.5833333333333333,
+  "stability": [
+    {
+      "Test": "A1",
+      "Komplexität": "low",
+      "Cypher konstant": "✓",
+      "Scores": [
+        2,
+        2,
+        2
+      ],
+      "Score-Konsistenz": "✓"
+    },
+    {
+      "Test": "B2",
+      "Komplexität": "mid",
+      "Cypher konstant": "✓",
+      "Scores": [
+        0,
+        0,
+        0
+      ],
+      "Score-Konsistenz": "✓"
+    },
+    {
+      "Test": "C3",
+      "Komplexität": "high",
+      "Cypher konstant": "✗",
+      "Scores": [
+        2,
+        2,
+        2
+      ],
+      "Score-Konsistenz": "✓"
+    }
+  ],
+  "cases": [
+    {
+      "id": "A1",
+      "category": "Traceability",
+      "complexity": "low",
+      "question": "An welcher Stelle im Standard befindet sich der Mikro-Block HTTP (Hyper Text Transfer Protocol)? Zeige den Pfad vom Document über Macro und Meso bis zum Mikro.",
+      "generated_cypher": "MATCH (doc:Document)-[:DEFINES]->(mac:Building_Block:Macro)-[:CONTAINS]->(mes:Building_Block:Meso)-[:CONTAINS]->(mi:Building_Block:Mikro {id: 'bb_mi_http'})\nRETURN doc.id AS document_id, doc.title AS document_title,\n       mac.id AS macro_id, mac.title AS macro_title,\n       mes.id AS meso_id, mes.title AS meso_title,\n       mi.id AS mikro_id, mi.title AS mikro_title",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 1,
+      "expected_rows": 1,
+      "error": null,
+      "duration_s": 2.96
+    },
+    {
+      "id": "A2",
+      "category": "Traceability",
+      "complexity": "mid",
+      "question": "Welche externen Standards werden vom Mikro-Block SOAP über alle Varianten referenziert? Gib die Schlüssel der Standards zurück.",
+      "generated_cypher": "MATCH (m:Mikro {id:'bb_mi_soap'})-[:HAS_VARIANT]->(v:Variant)-[r:REFERENCES]->(e:External_Standard)\nRETURN DISTINCT e.key AS standard_key, e.label AS standard_label, e.organization AS organization\nORDER BY standard_key",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 3,
+      "expected_rows": 3,
+      "error": null,
+      "duration_s": 2.61
+    },
+    {
+      "id": "A3",
+      "category": "Traceability",
+      "complexity": "high",
+      "question": "Liste alle Mikro-Bausteine im Macro-Bereich Sicherheit auf, die mindestens eine Variante mit dem Status 'dringend empfohlen' besitzen. Gib id und title zurück.",
+      "generated_cypher": "MATCH (macro:Macro)-[:CONTAINS]->(meso:Meso)-[:CONTAINS]->(mikro:Mikro)\nWHERE toLower(macro.title) CONTAINS 'sicherheit'\nMATCH (mikro)-[:HAS_VARIANT]->(v:Variant)-[:APPLIES_TO {normative_status:'dringend empfohlen'}]->(:Interface)\nRETURN DISTINCT mikro.id AS id, mikro.title AS title\nORDER BY mikro.title",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 4,
+      "expected_rows": 4,
+      "error": null,
+      "duration_s": 3.02
+    },
+    {
+      "id": "B1",
+      "category": "Dependency",
+      "complexity": "low",
+      "question": "Welche Building Blocks (Mikros, Variants, Alternatives) referenzieren den externen Standard mit Schlüssel 'IETF RFC 7540'? Gib id und title zurück.",
+      "generated_cypher": "MATCH (bb)-[:REFERENCES]->(e:External_Standard {key: 'IETF RFC 7540'})\nRETURN bb.id AS id, bb.title AS title, labels(bb) AS kind\nORDER BY title",
+      "score": 0,
+      "correct": false,
+      "actual_rows": 1,
+      "expected_rows": 1,
+      "error": null,
+      "duration_s": 2.17
+    },
+    {
+      "id": "B2",
+      "category": "Dependency",
+      "complexity": "mid",
+      "question": "Welche externen Standards werden von mehr als einem Mikro-Block referenziert? Sortiere absteigend nach Anzahl, gib Top 10 zurück.",
+      "generated_cypher": "MATCH (source)-[:REFERENCES]->(e:External_Standard)\nWHERE source:Mikro OR source:Variant OR source:Alternative\nWITH e,\n     CASE\n       WHEN source:Mikro THEN source\n       ELSE NULL\n     END AS directMikro\nOPTIONAL MATCH (source)<-[:HAS_VARIANT|HAS_ALTERNATIVE]-(parentMikro:Mikro)\nWITH e, coalesce(parentMikro, directMikro) AS mikro\nWHERE mikro IS NOT NULL\nWITH e, collect(DISTINCT mikro.id) AS mikros\nWHERE size(mikros) > 1\nRETURN e.key AS standard_key,\n       e.label AS standard_label,\n       e.organization AS organization,\n       size(mikros) AS mikro_count,\n       mikros AS referencing_mikros\nORDER BY mikro_count DESC\nLIMIT 10",
+      "score": 0,
+      "correct": false,
+      "actual_rows": 10,
+      "expected_rows": 7,
+      "error": null,
+      "duration_s": 4.86
+    },
+    {
+      "id": "B3",
+      "category": "Dependency",
+      "complexity": "high",
+      "question": "Wie viele unterschiedliche Mikro-Bausteine wären betroffen, wenn alle Standards der Organisation IETF überarbeitet würden?",
+      "generated_cypher": "MATCH (e:External_Standard {organization:'IETF'})<-[r:REFERENCES]-(s)\nOPTIONAL MATCH (s)<-[:HAS_VARIANT|HAS_ALTERNATIVE]-(m:Mikro)\nWITH collect(DISTINCT CASE WHEN m IS NOT NULL THEN m.id ELSE s.id END) AS mikro_ids\nRETURN size(mikro_ids) AS anzahl_betroffener_mikro_bausteine",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 1,
+      "expected_rows": 1,
+      "error": null,
+      "duration_s": 2.89
+    },
+    {
+      "id": "C1",
+      "category": "Normative",
+      "complexity": "low",
+      "question": "Welche Variants und Alternatives sind für die Schnittstelle S1 dringend empfohlen? Gib id, title und labels zurück.",
+      "generated_cypher": "MATCH (s)-[:APPLIES_TO {normative_status:'dringend empfohlen'}]->(:Interface {id:'S1'})\nWHERE s:Variant OR s:Alternative\nRETURN s.id AS id, s.title AS title, labels(s) AS kind\nORDER BY title",
+      "score": 1,
+      "correct": true,
+      "actual_rows": 33,
+      "expected_rows": 58,
+      "error": null,
+      "duration_s": 3.0
+    },
+    {
+      "id": "C2",
+      "category": "Normative",
+      "complexity": "mid",
+      "question": "Welche Mikro-Bausteine sind insgesamt nicht empfohlen (auf irgendeiner Schnittstelle)? Gib id und title zurück.",
+      "generated_cypher": "MATCH (s)-[:APPLIES_TO {normative_status:'nicht empfohlen'}]->(:Interface)\nOPTIONAL MATCH (s)<-[:HAS_VARIANT|HAS_ALTERNATIVE]-(m:Mikro)\nRETURN DISTINCT coalesce(m.id, s.id) AS id, coalesce(m.title, s.title) AS title\nORDER BY title",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 21,
+      "expected_rows": 21,
+      "error": null,
+      "duration_s": 2.72
+    },
+    {
+      "id": "C3",
+      "category": "Normative",
+      "complexity": "high",
+      "question": "Wie viele Varianten gibt es pro normativem Status, gruppiert nach Macro-Bereich?",
+      "generated_cypher": "MATCH (mac:Macro)-[:CONTAINS]->(mes:Meso)-[:CONTAINS]->(mi:Mikro)-[:HAS_VARIANT]->(v:Variant)-[a:APPLIES_TO]->(:Interface)\nRETURN mac.id AS macro_id, mac.title AS macro_title, a.normative_status AS normative_status, count(DISTINCT v) AS anzahl_varianten\nORDER BY mac.title, normative_status",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 11,
+      "expected_rows": 11,
+      "error": null,
+      "duration_s": 2.82
+    },
+    {
+      "id": "D1",
+      "category": "Coverage",
+      "complexity": "low",
+      "question": "Welche Mikro-Bausteine haben überhaupt keine Bewertung (weder direkt am Mikro noch über Variant oder Alternative)? Gib id und title zurück.",
+      "generated_cypher": "MATCH (m:Mikro)\nWHERE NOT (m)-[:APPLIES_TO]->(:Interface)\n  AND NOT EXISTS {\n    MATCH (m)-[:HAS_VARIANT|HAS_ALTERNATIVE]->(va)\n    WHERE (va)-[:APPLIES_TO]->(:Interface)\n  }\nRETURN m.id AS id, m.title AS title\nORDER BY m.title",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 2,
+      "expected_rows": 2,
+      "error": null,
+      "duration_s": 2.92
+    },
+    {
+      "id": "D2",
+      "category": "Coverage",
+      "complexity": "mid",
+      "question": "Welche externen Standards werden nur ein einziges Mal referenziert?",
+      "generated_cypher": "MATCH (s)-[:REFERENCES]->(e:External_Standard)\nWITH e, count(s) AS ref_count\nWHERE ref_count = 1\nMATCH (s)-[:REFERENCES]->(e)\nRETURN e.key AS standard_key, e.label AS standard_label, e.organization AS organization, e.url AS url, s.id AS referenced_by_id, s.title AS referenced_by_title\nORDER BY e.key",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 322,
+      "expected_rows": 322,
+      "error": null,
+      "duration_s": 3.14
+    },
+    {
+      "id": "D3",
+      "category": "Coverage",
+      "complexity": "high",
+      "question": "Wie viele Mikro-Bausteine pro Macro-Bereich gibt es, und wie viele davon haben mindestens eine Variante?",
+      "generated_cypher": "MATCH (mac:Macro)-[:CONTAINS]->(mes:Meso)-[:CONTAINS]->(mi:Mikro)\nWITH mac, mi\nOPTIONAL MATCH (mi)-[:HAS_VARIANT]->(v:Variant)\nWITH mac, mi, count(v) AS variantCount\nWITH mac,\n     count(mi) AS totalMikro,\n     sum(CASE WHEN variantCount > 0 THEN 1 ELSE 0 END) AS mikrosWithVariants\nRETURN mac.id AS macro_id,\n       mac.title AS macro_title,\n       totalMikro,\n       mikrosWithVariants\nORDER BY mac.title",
+      "score": 2,
+      "correct": true,
+      "actual_rows": 4,
+      "expected_rows": 4,
+      "error": null,
+      "duration_s": 3.6
+    }
+  ]
+}

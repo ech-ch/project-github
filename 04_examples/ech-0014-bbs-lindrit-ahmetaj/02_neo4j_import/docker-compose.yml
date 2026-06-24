@@ -1,0 +1,21 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: saga-neo4j
+    ports:
+      - "7474:7474"   # Neo4j Browser UI -> http://localhost:7474
+      - "7687:7687"   # Bolt protocol (used by the Python driver)
+    environment:
+      # Change this password before running. Must match NEO4J_PASSWORD env
+      # used by the import script and the Jupyter notebook.
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+      # APOC is not required for the import but useful for ad-hoc queries.
+      - NEO4J_PLUGINS=["apoc"]
+      # Memory settings sized for a thesis-scale graph (<10k nodes).
+      - NEO4J_server_memory_heap_initial__size=512M
+      - NEO4J_server_memory_heap_max__size=1G
+      - NEO4J_server_memory_pagecache_size=512M
+    volumes:
+      - ./neo4j_data:/data
+      - ./neo4j_logs:/logs
+    restart: unless-stopped

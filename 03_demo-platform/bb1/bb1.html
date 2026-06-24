@@ -1,0 +1,1139 @@
+<!doctype html>
+<html>
+	
+<head>
+<meta charset="utf-8">
+<title>eCH Standards</title>
+<link rel="stylesheet" href="../css/ech-style.css">
+	
+	
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NormGraph – Building Block Detailseite</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-soft: #f8fafb;
+      --surface-softer: #fbfcfd;
+      --border: #d9e0e5;
+      --text: #1f2a37;
+      --muted: #6b7280;
+      --primary: #0071bb;
+      --primary-soft: #eaf4fb;
+      --green: #4d7c57;
+      --green-soft: #edf6ef;
+      --orange: #b7791f;
+      --orange-soft: #fff6e8;
+      --red: #b42318;
+      --red-soft: #fef3f2;
+      --purple: #6f42c1;
+      --purple-soft: #f3edff;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .header-card {
+      padding: 26px 30px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .lead {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 980px;
+    }
+
+    .badge-row,
+    .action-row,
+    .meta-row,
+    .version-links,
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge,
+    .tag,
+    .small-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+    }
+
+    .badge.primary {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #b7d7ee;
+    }
+
+    .badge.green {
+      background: var(--green-soft);
+      color: var(--green);
+      border-color: #cfe3d3;
+    }
+
+    .badge.orange {
+      background: var(--orange-soft);
+      color: var(--orange);
+      border-color: #f1d2a2;
+    }
+
+    .badge.purple {
+      background: var(--purple-soft);
+      color: var(--purple);
+      border-color: #ddd0fb;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      color: #fff;
+      filter: brightness(0.97);
+    }
+
+    .section {
+      padding: 24px 28px;
+    }
+
+    .section-title {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+
+    .section-subtitle {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-softer);
+      padding: 16px;
+      min-height: 108px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stat-note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .chart-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: var(--surface-softer);
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .line-chart {
+      position: relative;
+      height: 220px;
+      padding: 12px 10px 24px 10px;
+      border-radius: 12px;
+      background:
+        linear-gradient(to top, #eef3f6 1px, transparent 1px) 0 0 / 100% 25%,
+        linear-gradient(to right, #f3f6f8 1px, transparent 1px) 0 0 / 16.66% 100%;
+    }
+
+    .line-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .mini-bars {
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      height: 220px;
+      padding: 10px 6px 24px 6px;
+    }
+
+    .bar-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: center;
+      gap: 8px;
+      height: 100%;
+    }
+
+    .bar {
+      width: 36px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(to top, #0071bb, #4a9ad0);
+    }
+
+    .bar.secondary {
+      background: linear-gradient(to top, #7aa78a, #9bc2a8);
+    }
+
+    .bar-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .rating-wrap {
+      display: grid;
+      gap: 14px;
+      padding-top: 6px;
+    }
+
+    .rating-item {
+      display: grid;
+      grid-template-columns: 140px 1fr 54px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .rating-label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .rating-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #e9eff3;
+      overflow: hidden;
+    }
+
+    .rating-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #0071bb, #5fa8d6);
+    }
+
+    .rating-value {
+      text-align: right;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .versions-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .version-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .version-top {
+      padding: 22px 24px 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(to bottom, #ffffff, #fcfdff);
+    }
+
+    .version-top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .version-title {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .version-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 820px;
+    }
+
+    .version-body {
+      padding: 22px 24px 24px 24px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 22px;
+    }
+
+    .content-block,
+    .meta-block {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-softer);
+      padding: 18px;
+    }
+
+    .block-title {
+      margin: 0 0 12px 0;
+      font-size: 17px;
+    }
+
+    .content-block p {
+      margin: 0 0 12px 0;
+      font-size: 15px;
+    }
+
+    .demo-figure {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .demo-figure-top {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      background: #f9fbfc;
+      font-weight: 700;
+    }
+
+    .demo-diagram {
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .node {
+      min-width: 150px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--primary-soft);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .arrow {
+      font-size: 24px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .meta-table {
+      display: grid;
+      gap: 10px;
+    }
+
+    .meta-row-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf1;
+    }
+
+    .meta-row-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .meta-key {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .meta-value {
+      font-size: 14px;
+    }
+
+    .version-footer {
+      padding: 0 24px 22px 24px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 24px 20px 24px;
+    }
+
+    .history-note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px dashed #cfd8df;
+      font-size: 14px;
+    }
+
+    .small-link {
+      background: #fff;
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .charts-grid,
+      .version-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 18px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rating-item,
+      .meta-row-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+	
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+
+    <tr>
+		<td width="100"></td>
+      <td>
+                <a href="../index.html"><img src="../img/logo-ech.svg" alt="" width="300"></a>
+      </td>
+      <td></td>
+      <td></td>
+	<td width="100"></td>
+    </tr>
+
+    <tr>
+	<td width="100"></td>
+      <td width="1029"></td>
+		
+	  <td width="150">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="normbrowser.html">NormBrowser</a>
+
+        </div>
+      </td>
+
+      <td width="100">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Explorer</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="interop_matrix.html">Interopmatrix</a></li>
+            <li><a href="http://localhost:7474/browser/">Graph</a></li>
+          </ul>
+
+        </div>
+      </td>
+
+      <td width="200">
+
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Forum</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="discussions.html">All</a></li>
+            <li><a href="discussions.html">eCH Private</a></li>
+          </ul>
+
+        </div>
+
+      </td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="50">
+		<td width="100" bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"><a class="dropdown-link" href="index.html">NormGraph</a> » <a class="dropdown-link" href="../interop_matrix.html">Explorer</a> » <a class="dropdown-link" href="../interop_matrix.html">Interopmatrix</a> » <a class="dropdown-link" href="bb1.html">BB-0123</a></td>
+      <td bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"></td>
+		<td width="100" bgcolor="#f1f2f1"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<img src="../img/chatgpt.png" alt=""/>
+
+	
+<table width="100%" border="0">
+  <tbody>
+	<tr>
+		<td width="100"></td>
+		<td><h1>BB-0123 · Anschrift</h1></td>
+	</tr>
+	<tr>
+	<td width="100"></td>
+	<td>
+		
+<div class="page">
+
+    <section class="card header-card">
+      <div class="eyebrow">NormGraph › Building Blocks › Detailansicht</div>
+      <p class="lead">
+        Dieser Building Block beschreibt die strukturierte Repräsentation einer Anschrift
+        zur standardübergreifenden Wiederverwendung in Verwaltung, Wirtschaft, Bildung,
+        Planung und Justiz. Die Seite zeigt die gesamte Versionshistorie, Kennzahlen,
+        Aktivitätsmuster sowie Referenzen zu maschinenlesbaren Dateien und Diskussionskanälen.
+      </p>
+
+      <div class="badge-row">
+        <span class="badge primary">Kategorie: Verwaltung</span>
+        <span class="badge green">Fachgruppe: eCH Fachgruppe Meldewesen</span>
+        <span class="badge orange">Aktuelle Version: 1.2.0</span>
+        <span class="badge purple">Aktueller Status: Öffentliche Konsultation</span>
+      </div>
+
+      <div class="meta-row">
+        <span class="badge">Standards zugeordnet: XZuFi, XGewerbeanzeige, XPlanverfahren</span>
+        <span class="badge">Schnittstellen: REST, XML-Schema, RDF Mapping</span>
+        <span class="badge">Formate: JSON, PNG, SVG</span>
+      </div>
+
+      <div class="action-row">
+        <a class="btn btn-primary" href="bb1_discussion.html">Diskussionskanal öffnen</a>
+        <button class="btn">BB abonnieren</button>
+        <button class="btn">JSON öffnen</button>
+        <button class="btn">GitHub Repository</button>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2 class="section-title">Kennzahlen und Aktivität</h2>
+      <p class="section-subtitle">
+        Übergeordnete Statistik zum gesamten Building Block über alle Versionen hinweg.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Traffic</div>
+          <div class="stat-value">18’420</div>
+          <div class="stat-note">Seitenaufrufe in den letzten 12 Monaten</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Anzahl Posts</div>
+          <div class="stat-value">246</div>
+          <div class="stat-note">Über alle Versionskanäle kumuliert</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Abonnenten</div>
+          <div class="stat-value">137</div>
+          <div class="stat-note">RSS und E-Mail zusammen</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Aktivitätsfrequenz</div>
+          <div class="stat-value">3.8</div>
+          <div class="stat-note">Beiträge / Woche im Mittel</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Aktive Versionen</div>
+          <div class="stat-value">4</div>
+          <div class="stat-note">Von insgesamt 7 historischen Versionen</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Frequentierheit aller Aktivitäten über Zeit</div>
+          <div class="line-chart">
+            <svg class="line-svg" viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Aktivitätsverlauf">
+              <polyline
+                fill="none"
+                stroke="#0071bb"
+                stroke-width="4"
+                points="10,180 70,165 130,150 190,130 250,142 310,105 370,92 430,88 490,60 550,72"
+              />
+              <circle cx="10" cy="180" r="4" fill="#0071bb"></circle>
+              <circle cx="70" cy="165" r="4" fill="#0071bb"></circle>
+              <circle cx="130" cy="150" r="4" fill="#0071bb"></circle>
+              <circle cx="190" cy="130" r="4" fill="#0071bb"></circle>
+              <circle cx="250" cy="142" r="4" fill="#0071bb"></circle>
+              <circle cx="310" cy="105" r="4" fill="#0071bb"></circle>
+              <circle cx="370" cy="92" r="4" fill="#0071bb"></circle>
+              <circle cx="430" cy="88" r="4" fill="#0071bb"></circle>
+              <circle cx="490" cy="60" r="4" fill="#0071bb"></circle>
+              <circle cx="550" cy="72" r="4" fill="#0071bb"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Posts und Abonnenten pro Version</div>
+          <div class="mini-bars">
+            <div class="bar-group">
+              <div class="bar" style="height: 52%;"></div>
+              <div class="bar secondary" style="height: 34%; width: 24px;"></div>
+              <div class="bar-label">v1.2.0</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 78%;"></div>
+              <div class="bar secondary" style="height: 48%; width: 24px;"></div>
+              <div class="bar-label">v1.1.0</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 61%;"></div>
+              <div class="bar secondary" style="height: 40%; width: 24px;"></div>
+              <div class="bar-label">v1.0.0</div>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 30%;"></div>
+              <div class="bar secondary" style="height: 22%; width: 24px;"></div>
+              <div class="bar-label">v0.9.0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Relevanz- und Profiliertheitsratings</div>
+          <div class="rating-wrap">
+            <div class="rating-item">
+              <div class="rating-label">Relevanz</div>
+              <div class="rating-track">
+                <div class="rating-fill" style="width: 92%;"></div>
+              </div>
+              <div class="rating-value">4.6 / 5</div>
+            </div>
+
+            <div class="rating-item">
+              <div class="rating-label">Profiliertheit</div>
+              <div class="rating-track">
+                <div class="rating-fill" style="width: 78%;"></div>
+              </div>
+              <div class="rating-value">3.9 / 5</div>
+            </div>
+
+            <div class="rating-item">
+              <div class="rating-label">Wiederverwendung</div>
+              <div class="rating-track">
+                <div class="rating-fill" style="width: 88%;"></div>
+              </div>
+              <div class="rating-value">4.4 / 5</div>
+            </div>
+
+            <div class="rating-item">
+              <div class="rating-label">Interoperabilität</div>
+              <div class="rating-track">
+                <div class="rating-fill" style="width: 84%;"></div>
+              </div>
+              <div class="rating-value">4.2 / 5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-note">
+        Die Kennzahlen sind hier über alle Versionen aggregiert. Für eine spätere Realimplementierung
+        könntest du wahlweise zwischen <strong>Gesamtansicht</strong> und <strong>versionsspezifischer Statistik</strong> umschalten.
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2 class="section-title">Versionshistorie</h2>
+      <p class="section-subtitle">
+        Alle Versionen des Building Blocks, absteigend nach Aktualität sortiert. Die neueste Version steht oben.
+      </p>
+
+      <div class="versions-list">
+
+        <!-- VERSION 1 -->
+        <article class="version-card">
+          <div class="version-top">
+            <div class="version-top-row">
+              <div>
+                <h3 class="version-title">Anschrift – Version 1.2.0</h3>
+                <p class="version-subtitle">
+                  Aktuelle Fassung mit präziserer Trennung zwischen Strasse/Hausnummer,
+                  Adresszusatz und alternativen Zustellinformationen.
+                </p>
+
+                <div class="badge-row">
+                  <span class="badge orange">Status: Öffentliche Konsultation</span>
+                  <span class="badge primary">Versionsnummer: 1.2.0</span>
+                  <span class="badge green">Publikationszyklus: 2026/Q2</span>
+                </div>
+              </div>
+
+              <div class="tag-row">
+                <span class="tag">Neueste Version</span>
+                <span class="tag">Aktiv</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="version-body">
+            <div class="content-block">
+              <h4 class="block-title">Content</h4>
+              <p>
+                Diese Version ergänzt den Building Block um eine klarere semantische Abgrenzung
+                zwischen Kernadresse und ergänzenden Zustellinformationen. Zusätzlich wurde die
+                Beschreibung für internationale Anschriften überarbeitet.
+              </p>
+              <p>
+                Ziel ist eine robustere Wiederverwendung in standardübergreifenden Kontexten,
+                insbesondere dort, wo verschiedene Verwaltungs- und Fachstandards unterschiedliche
+                Modellierungstiefen aufweisen.
+              </p>
+
+              <div class="demo-figure">
+                <div class="demo-figure-top">Beispielhafte Abbildung: Struktur der Anschrift</div>
+                <div class="demo-diagram">
+                  <div class="node">Strasse / Hausnummer</div>
+                  <div class="arrow">→</div>
+                  <div class="node">Adresszusatz</div>
+                  <div class="arrow">→</div>
+                  <div class="node">Postleitzahl / Ort</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="meta-block">
+              <h4 class="block-title">Metadaten</h4>
+              <div class="meta-table">
+                <div class="meta-row-item">
+                  <div class="meta-key">Kompatibilitäten</div>
+                  <div class="meta-value">Kompatibel zu BB-0091 Person v2.0.0, BB-0044 Organisation v1.3.0</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Zugehörige Standards</div>
+                  <div class="meta-value">XZuFi, XGewerbeanzeige, XPlanverfahren</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Kategorie</div>
+                  <div class="meta-value">Verwaltung</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Schnittstellen</div>
+                  <div class="meta-value">REST API, RDF Export, Import via JSON Upload</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Formate</div>
+                  <div class="meta-value">JSON, PNG, SVG</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Verantwortlichkeit</div>
+                  <div class="meta-value">eCH Fachgruppe Meldewesen</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="version-footer">
+            <div class="version-links">
+              <a class="small-link" href="https://github.com/" target="_blank">JSON auf GitHub</a>
+              <a class="small-link" href="https://github.com/" target="_blank">Abbildungen auf GitHub</a>
+              <a class="small-link" href="diskussionskanal-bb-0123-v1-2-0.html">Diskussionskanal Version 1.2.0</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- VERSION 2 -->
+        <article class="version-card">
+          <div class="version-top">
+            <div class="version-top-row">
+              <div>
+                <h3 class="version-title">Anschrift – Version 1.1.0</h3>
+                <p class="version-subtitle">
+                  Überarbeitete Fassung mit zusätzlicher Modellierung von Zustellhinweisen
+                  und erster konsolidierter Übersetzung.
+                </p>
+
+                <div class="badge-row">
+                  <span class="badge green">Status: Genehmigt</span>
+                  <span class="badge primary">Versionsnummer: 1.1.0</span>
+                  <span class="badge">Publikationszyklus: 2025/Q4</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="version-body">
+            <div class="content-block">
+              <h4 class="block-title">Content</h4>
+              <p>
+                Version 1.1.0 führte erstmals strukturierte Zustellhinweise und ein erweitertes
+                Mapping auf organisationsbezogene Adressverwendungen ein. Diese Version wurde nach
+                inhaltlicher QS2 genehmigt und diente als Grundlage für mehrere Fachstandards.
+              </p>
+
+              <div class="demo-figure">
+                <div class="demo-figure-top">Beispielhafte Abbildung: Einbettung in Organisationsdaten</div>
+                <div class="demo-diagram">
+                  <div class="node">Organisation</div>
+                  <div class="arrow">→</div>
+                  <div class="node">Anschrift</div>
+                  <div class="arrow">→</div>
+                  <div class="node">Zustellhinweis</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="meta-block">
+              <h4 class="block-title">Metadaten</h4>
+              <div class="meta-table">
+                <div class="meta-row-item">
+                  <div class="meta-key">Kompatibilitäten</div>
+                  <div class="meta-value">Kompatibel zu BB-0044 Organisation v1.2.0 und BB-0091 Person v1.8.0</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Zugehörige Standards</div>
+                  <div class="meta-value">XGewerbeanzeige, XUnternehmen</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Kategorie</div>
+                  <div class="meta-value">Wirtschaft</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Schnittstellen</div>
+                  <div class="meta-value">REST API, XML-Schema</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Formate</div>
+                  <div class="meta-value">JSON, SVG</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Verantwortlichkeit</div>
+                  <div class="meta-value">eCH Fachgruppe Wirtschaftsdaten</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="version-footer">
+            <div class="version-links">
+              <a class="small-link" href="https://github.com/" target="_blank">JSON auf GitHub</a>
+              <a class="small-link" href="https://github.com/" target="_blank">Abbildungen auf GitHub</a>
+              <a class="small-link" href="diskussionskanal-bb-0123-v1-1-0.html">Diskussionskanal Version 1.1.0</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- VERSION 3 -->
+        <article class="version-card">
+          <div class="version-top">
+            <div class="version-top-row">
+              <div>
+                <h3 class="version-title">Anschrift – Version 1.0.0</h3>
+                <p class="version-subtitle">
+                  Erste freigegebene stabile Version des Building Blocks mit Kernstruktur
+                  für nationale Anschriften.
+                </p>
+
+                <div class="badge-row">
+                  <span class="badge green">Status: Publikation</span>
+                  <span class="badge primary">Versionsnummer: 1.0.0</span>
+                  <span class="badge">Publikationszyklus: 2025/Q2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="version-body">
+            <div class="content-block">
+              <h4 class="block-title">Content</h4>
+              <p>
+                Version 1.0.0 definierte die Grundstruktur der Anschrift als wiederverwendbaren
+                Building Block. Enthalten waren die Komponenten Strasse, Hausnummer, Postleitzahl,
+                Ort und Land sowie erste normative Hinweise zur Mehrfachverwendung.
+              </p>
+            </div>
+
+            <div class="meta-block">
+              <h4 class="block-title">Metadaten</h4>
+              <div class="meta-table">
+                <div class="meta-row-item">
+                  <div class="meta-key">Kompatibilitäten</div>
+                  <div class="meta-value">Basisversion für spätere Folgereleases</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Zugehörige Standards</div>
+                  <div class="meta-value">XZuFi</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Kategorie</div>
+                  <div class="meta-value">Verwaltung</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Schnittstellen</div>
+                  <div class="meta-value">REST API</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Formate</div>
+                  <div class="meta-value">JSON</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Verantwortlichkeit</div>
+                  <div class="meta-value">eCH Fachgruppe Meldewesen</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="version-footer">
+            <div class="version-links">
+              <a class="small-link" href="https://github.com/" target="_blank">JSON auf GitHub</a>
+              <a class="small-link" href="https://github.com/" target="_blank">Abbildungen auf GitHub</a>
+              <a class="small-link" href="diskussionskanal-bb-0123-v1-0-0.html">Diskussionskanal Version 1.0.0</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- VERSION 4 -->
+        <article class="version-card">
+          <div class="version-top">
+            <div class="version-top-row">
+              <div>
+                <h3 class="version-title">Anschrift – Version 0.9.0</h3>
+                <p class="version-subtitle">
+                  Vorstufe im Reviewprozess; diente als Entwurf mit offener Klärung
+                  mehrerer semantischer Detailfragen.
+                </p>
+
+                <div class="badge-row">
+                  <span class="badge orange">Status: Überprüfung</span>
+                  <span class="badge primary">Versionsnummer: 0.9.0</span>
+                  <span class="badge">Vorversion</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="version-body">
+            <div class="content-block">
+              <h4 class="block-title">Content</h4>
+              <p>
+                Diese Vorversion zeigt beispielhaft, wie auch unfertige oder historische Stände
+                in der BB-Seite sichtbar gemacht werden können. Für Demo-Zwecke ist das nützlich,
+                weil dadurch die Entwicklungslinie des Building Blocks nachvollziehbar wird.
+              </p>
+            </div>
+
+            <div class="meta-block">
+              <h4 class="block-title">Metadaten</h4>
+              <div class="meta-table">
+                <div class="meta-row-item">
+                  <div class="meta-key">Kompatibilitäten</div>
+                  <div class="meta-value">Noch keine verbindlichen Freigaben</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Zugehörige Standards</div>
+                  <div class="meta-value">Pilotierung in XPlanverfahren</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Kategorie</div>
+                  <div class="meta-value">Planung</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Schnittstellen</div>
+                  <div class="meta-value">REST API (Entwurf)</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Formate</div>
+                  <div class="meta-value">JSON, PNG</div>
+                </div>
+
+                <div class="meta-row-item">
+                  <div class="meta-key">Verantwortlichkeit</div>
+                  <div class="meta-value">Interdisziplinäres Reviewteam</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="version-footer">
+            <div class="version-links">
+              <a class="small-link" href="https://github.com/" target="_blank">JSON auf GitHub</a>
+              <a class="small-link" href="https://github.com/" target="_blank">Abbildungen auf GitHub</a>
+              <a class="small-link" href="diskussionskanal-bb-0123-v0-9-0.html">Diskussionskanal Version 0.9.0</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+		
+		
+	</td>
+	</tr>	  
+	  	  
+  </tbody>	
+</table>
+	
+</body>
+</html>

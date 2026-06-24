@@ -1,0 +1,1069 @@
+<!doctype html>
+<html>
+	
+<head>
+<meta charset="utf-8">
+<title>eCH Standards</title>
+<link rel="stylesheet" href="../css/ech-style.css">+
+	
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NormGraph – Diskussionskanal Building Block</title>
+  <style>
+    :root {
+      --bg: #f5f7f9;
+      --surface: #ffffff;
+      --surface-soft: #f8fafb;
+      --border: #d9e0e5;
+      --text: #1f2a37;
+      --muted: #6b7280;
+      --primary: #0071bb;
+      --primary-soft: #eaf4fb;
+      --green: #4d7c57;
+      --green-soft: #edf6ef;
+      --orange: #b7791f;
+      --orange-soft: #fff6e8;
+      --red: #b42318;
+      --red-soft: #fef3f2;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px;
+      background: #ffffff;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .header-card,
+    .toolbar-card,
+    .timeline-card,
+    .posts-card,
+    .details-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .header-card {
+      padding: 24px 28px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 30px;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 860px;
+    }
+
+    .badge-row,
+    .action-row,
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .badge.type-rfc {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #b7d7ee;
+    }
+
+    .badge.type-question {
+      background: #f3f0ff;
+      color: #5b46b2;
+      border-color: #d9d1ff;
+    }
+
+    .badge.status-current {
+      background: var(--orange-soft);
+      color: var(--orange);
+      border-color: #f1d2a2;
+    }
+
+    .badge.visibility-public {
+      background: var(--green-soft);
+      color: var(--green);
+      border-color: #cfe3d3;
+    }
+
+    .badge.visibility-private {
+      background: #f4f4f5;
+      color: #4b5563;
+      border-color: #d6d9de;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.96);
+      color: #fff;
+    }
+
+    .btn-danger {
+      color: var(--red);
+      border-color: #f0c7c4;
+      background: var(--red-soft);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 20px;
+    }
+
+    .timeline-card,
+    .details-card {
+      padding: 22px 24px;
+    }
+
+    .section-title {
+      margin: 0 0 14px 0;
+      font-size: 18px;
+    }
+
+    .section-subtitle {
+      margin: -6px 0 16px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-step {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 12px;
+      align-items: start;
+      position: relative;
+    }
+
+    .timeline-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 30px;
+      width: 2px;
+      height: calc(100% + 6px);
+      background: #dde5ea;
+    }
+
+    .timeline-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #c8d3dc;
+      background: #fff;
+      margin-top: 1px;
+    }
+
+    .timeline-step.done .timeline-dot {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .timeline-step.current .timeline-dot {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(183, 121, 31, 0.15);
+    }
+
+    .timeline-step.rework .timeline-dot {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .timeline-label {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .timeline-meta {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline-date {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    .history-note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px dashed #cfd8df;
+      font-size: 14px;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .detail-item {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-soft);
+    }
+
+    .detail-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .toolbar-card {
+      padding: 18px 24px 20px 24px;
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 12px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .posts-card {
+      padding: 0;
+    }
+
+    .posts-head {
+      padding: 20px 24px 14px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .post-list {
+      padding: 18px 24px 24px 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .post {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 18px 10px 18px;
+    }
+
+    .post-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #0071bb, #4f8dc0);
+      flex: 0 0 auto;
+    }
+
+    .avatar.gray {
+      background: linear-gradient(135deg, #7b8794, #9aa5b1);
+    }
+
+    .post-author-meta strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .post-author-meta span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .post-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .post-body {
+      padding: 0 18px 14px 72px;
+      font-size: 15px;
+    }
+
+    .post-body p {
+      margin: 0 0 10px 0;
+    }
+
+    .post-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 18px 16px 72px;
+    }
+
+    .action-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .reply {
+      margin: 0 18px 18px 72px;
+      border-left: 3px solid #dbe5ec;
+      padding-left: 14px;
+    }
+
+    .reply .post {
+      background: #fbfcfd;
+    }
+
+    .new-post {
+      margin-top: 8px;
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      background: #fbfcfd;
+    }
+
+    .new-post-grid {
+      display: grid;
+      grid-template-columns: 1fr 160px 160px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .new-post textarea {
+      width: 100%;
+      min-height: 120px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+      resize: vertical;
+    }
+
+    .small-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-history-toggle {
+      margin-top: 12px;
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .history-panel {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fbfcfd;
+    }
+
+    .history-panel.open {
+      display: block;
+    }
+
+    .history-entry {
+      padding: 10px 0;
+      border-bottom: 1px solid #e8edf1;
+      font-size: 14px;
+    }
+
+    .history-entry:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    @media (max-width: 1024px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar-grid,
+      .new-post-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .post-body,
+      .post-actions,
+      .reply {
+        padding-left: 18px;
+        margin-left: 18px;
+      }
+    }
+  </style>
+	
+	
+	
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+
+    <tr>
+		<td width="100"></td>
+      <td>
+                <a href="../index.html"><img src="../img/logo-ech.svg" alt="" width="300"></a>
+      </td>
+      <td></td>
+      <td></td>
+	<td width="100"></td>
+    </tr>
+
+    <tr>
+	<td width="100"></td>
+      <td width="1029"></td>
+		
+	  <td width="150">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="normbrowser.html">NormBrowser</a>
+
+        </div>
+      </td>
+
+      <td width="100">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Explorer</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="interop_matrix.html">Interopmatrix</a></li>
+            <li><a href="http://localhost:7474/browser/">Graph</a></li>
+          </ul>
+
+        </div>
+      </td>
+
+      <td width="200">
+
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Forum</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="discussions.html">All</a></li>
+            <li><a href="discussions.html">eCH Private</a></li>
+          </ul>
+
+        </div>
+
+      </td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="50">
+		<td width="100" bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"><a class="dropdown-link" href="../index.html">NormGraph</a> » <a class="dropdown-link" href="../discussions.html">Forum</a> » <a class="dropdown-link" href="bb1_discussion.html">BB-0123</a></td>
+      <td bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"></td>
+		<td width="100" bgcolor="#f1f2f1"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<img src="../img/chatgpt.png" alt=""/>
+
+	
+<table width="100%" border="0">
+  <tbody>
+	<tr>
+		<td width="100"></td>
+		<td><h1>Discussion</h1></td>
+	</tr>
+	<tr>
+	<td width="100"></td>
+	<td>
+		
+		<div class="page">
+
+    <section class="header-card">
+      <div class="eyebrow">NormGraph › Building Blocks › Diskussionskanal</div>
+
+      <div class="title-row">
+        <div>
+          <h1>BB-0123 · Anschrift</h1>
+          <p class="subtitle">
+            Diskussionskanal zum Building Block <strong>„Anschrift“</strong> für Rückfragen,
+            Änderungsanträge, formale und inhaltliche Qualitätssicherung sowie die öffentliche Konsultation.
+          </p>
+
+          <div class="badge-row">
+            <span class="badge type-rfc">Type: Request for Change</span>
+            <span class="badge status-current">Aktueller Status: Öffentliche Konsultation</span>
+            <span class="badge visibility-public">Kanal offen</span>
+          </div>
+
+          <div class="meta-row">
+            <span class="badge">Verantwortlich: Daniel Keller</span>
+            <span class="badge">Building Block Version: 1.2.0</span>
+            <span class="badge">Eröffnet am: 12.03.2026</span>
+            <span class="badge">Abonnenten: 27</span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-primary">+ Post schreiben</button>
+          <button class="btn">RSS abonnieren</button>
+          <button class="btn">E-Mail abonnieren</button>
+          <button class="btn">Kanal schliessen</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="split">
+      <section class="timeline-card">
+        <h2 class="section-title">Statusverlauf</h2>
+        <p class="section-subtitle">
+          Der aktuelle Status ist sofort sichtbar. Die vollständige Historie kann zusätzlich eingeblendet werden.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Eingereicht</div>
+              <div class="timeline-meta">RFC durch Fachgruppe Verwaltung eingereicht</div>
+            </div>
+            <div class="timeline-date">12.03.2026</div>
+          </div>
+
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Erarbeitung</div>
+              <div class="timeline-meta">Redaktionelle Erstbearbeitung aufgenommen</div>
+            </div>
+            <div class="timeline-date">14.03.2026</div>
+          </div>
+
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Formale QS1</div>
+              <div class="timeline-meta">Prüfung von Struktur, Metadaten und Referenzen</div>
+            </div>
+            <div class="timeline-date">17.03.2026</div>
+          </div>
+
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Inhaltliche QS1</div>
+              <div class="timeline-meta">Rückfragen zur Definition der Adresskomponenten</div>
+            </div>
+            <div class="timeline-date">20.03.2026</div>
+          </div>
+
+          <div class="timeline-step rework">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Einarbeitung Rückmeldungen</div>
+              <div class="timeline-meta">Anpassungen aufgrund der QS1-Kommentare</div>
+            </div>
+            <div class="timeline-date">24.03.2026</div>
+          </div>
+
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Übersetzung1</div>
+              <div class="timeline-meta">Arbeitsübersetzung zur Vorbereitung der Konsultation</div>
+            </div>
+            <div class="timeline-date">28.03.2026</div>
+          </div>
+
+          <div class="timeline-step current">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-label">Öffentliche Konsultation</div>
+              <div class="timeline-meta">Aktueller Status – Rückmeldungen aus Öffentlichkeit und Fachgruppen</div>
+            </div>
+            <div class="timeline-date">seit 02.04.2026</div>
+          </div>
+        </div>
+
+        <button class="status-history-toggle" onclick="toggleHistory()">
+          Vollständige Statushistorie anzeigen
+        </button>
+
+        <div class="history-panel" id="historyPanel">
+          <div class="history-entry"><strong>12.03.2026</strong> – Eingereicht</div>
+          <div class="history-entry"><strong>14.03.2026</strong> – Erarbeitung</div>
+          <div class="history-entry"><strong>17.03.2026</strong> – Formale QS1</div>
+          <div class="history-entry"><strong>20.03.2026</strong> – Inhaltliche QS1</div>
+          <div class="history-entry"><strong>24.03.2026</strong> – Einarbeitung Rückmeldungen</div>
+          <div class="history-entry"><strong>28.03.2026</strong> – Übersetzung1</div>
+          <div class="history-entry"><strong>02.04.2026</strong> – Öffentliche Konsultation</div>
+          <div class="history-entry"><strong>optional möglich</strong> – Rücksprung von Inhaltliche QS1 oder Inhaltliche QS2 zu Einarbeitung Rückmeldungen</div>
+          <div class="history-entry"><strong>optional möglich</strong> – Rücksprung von Abgelehnt zu Erarbeitung</div>
+        </div>
+
+        <div class="history-note">
+          <strong>Workflow-Logik:</strong> Die Status folgen grundsätzlich der definierten Reihenfolge.
+          Rücksprünge sind aus <em>Inhaltliche QS1</em> bzw. <em>Inhaltliche QS2</em> nach
+          <em>Einarbeitung Rückmeldungen</em> möglich. Im Fall von <em>Abgelehnt</em> erfolgt der
+          Rücksprung nach <em>Erarbeitung</em>.
+        </div>
+      </section>
+
+      <section class="details-card">
+        <h2 class="section-title">Kanalinformationen</h2>
+
+        <div class="detail-list">
+          <div class="detail-item">
+            <strong>Type</strong>
+            Request for Change
+          </div>
+
+          <div class="detail-item">
+            <strong>Status</strong>
+            Öffentliche Konsultation
+          </div>
+
+          <div class="detail-item">
+            <strong>Funktionen</strong>
+            Post schreiben, öffentlich/privat klassifizieren, Kanal schliessen, abonnieren, filtern
+          </div>
+
+          <div class="detail-item">
+            <strong>Sichtbarkeit</strong>
+            Beiträge können öffentlich oder privat (eCH) gekennzeichnet werden
+          </div>
+
+          <div class="detail-item">
+            <strong>Moderation</strong>
+            Posts melden, eigene Posts löschen, erledigt markieren
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="toolbar-card">
+      <h2 class="section-title">Beiträge filtern</h2>
+      <div class="toolbar-grid">
+        <div class="field">
+          <label for="search">Suche</label>
+          <input id="search" type="text" placeholder="Nach Begriffen im Kanal suchen …" />
+        </div>
+
+        <div class="field">
+          <label for="type">Type</label>
+          <select id="type">
+            <option>Alle</option>
+            <option>Request for Change</option>
+            <option>Frage</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status">
+            <option>Alle</option>
+            <option>Eingereicht</option>
+            <option>Erarbeitung</option>
+            <option>Formale QS1</option>
+            <option>Inhaltliche QS1</option>
+            <option>Übersetzung1</option>
+            <option>Öffentliche Konsultation</option>
+            <option>Einarbeitung Rückmeldungen</option>
+            <option>Formale QS2</option>
+            <option>Inhaltliche QS2</option>
+            <option>Abgelehnt</option>
+            <option>Genehmigt</option>
+            <option>Übersetzung2</option>
+            <option>Publikation</option>
+            <option>Überprüfung</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="person">Person</label>
+          <select id="person">
+            <option>Alle</option>
+            <option>Hans Muster</option>
+            <option>Frederic Meier</option>
+            <option>Anna Keller</option>
+            <option>Michael Frei</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="period">Zeitraum</label>
+          <select id="period">
+            <option>Gesamter Zeitraum</option>
+            <option>Letzte 7 Tage</option>
+            <option>Letzte 30 Tage</option>
+            <option>Q1 2026</option>
+            <option>Q2 2026</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="posts-card">
+      <div class="posts-head">
+        <div>
+          <h2 class="section-title" style="margin-bottom: 4px;">Diskussionsverlauf</h2>
+          <div class="section-subtitle" style="margin: 0;">
+            Sichtbar sind Person, Profilbild, Zeitstempel, Sichtbarkeit und der Statuskontext des jeweiligen Posts.
+          </div>
+        </div>
+        <div class="badge-row" style="margin-top: 0;">
+          <span class="badge">12 Beiträge</span>
+          <span class="badge">3 offene Punkte</span>
+          <span class="badge">2 erledigt</span>
+        </div>
+      </div>
+
+      <div class="post-list">
+
+        <article class="post">
+          <div class="post-header">
+            <div class="post-author">
+              <div class="avatar">HM</div>
+              <div class="post-author-meta">
+                <strong>Hans Muster</strong>
+                <span>02.04.2026 · 09:14 Uhr</span>
+              </div>
+            </div>
+            <div class="post-badges">
+              <span class="badge visibility-public">Öffentlich</span>
+              <span class="badge status-current">Status: Öffentliche Konsultation</span>
+            </div>
+          </div>
+
+          <div class="post-body">
+            <p>
+              Ich schlage vor, die Definition von <em>Adresszusatz</em> präziser von
+              <em>Strasse/Hausnummer</em> abzugrenzen. In mehreren Standards wird dies aktuell unterschiedlich modelliert.
+            </p>
+            <p>
+              Konkret wäre zu prüfen, ob der Building Block eine optionale Komponente
+              <strong>„Adresszusatz“</strong> normativ führen soll.
+            </p>
+          </div>
+
+          <div class="post-actions">
+            <span class="action-pill">💬 Antworten</span>
+            <span class="action-pill">✅ Als erledigt markieren</span>
+            <span class="action-pill">😀 Emoji</span>
+            <span class="action-pill">🚩 Post melden</span>
+            <span class="action-pill">🗑 Eigenen Post löschen</span>
+          </div>
+
+          <div class="reply">
+            <article class="post">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="avatar gray">DM</div>
+                  <div class="post-author-meta">
+                    <strong>Frederic Meier</strong>
+                    <span>02.04.2026 · 10:03 Uhr</span>
+                  </div>
+                </div>
+                <div class="post-badges">
+                  <span class="badge visibility-private">Privat (eCH)</span>
+                  <span class="badge status-current">Status: Öffentliche Konsultation</span>
+                </div>
+              </div>
+
+              <div class="post-body">
+                <p>
+                  Guter Punkt. Für die interne Diskussion wäre zusätzlich zu klären,
+                  wie wir dies in den Metadaten und in der englischen Bezeichnung spiegeln würden.
+                </p>
+              </div>
+
+              <div class="post-actions">
+                <span class="action-pill">💬 Antworten</span>
+                <span class="action-pill">✅ Als erledigt markieren</span>
+                <span class="action-pill">👍 3</span>
+                <span class="action-pill">🚩 Post melden</span>
+              </div>
+            </article>
+          </div>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="post-author">
+              <div class="avatar gray">AK</div>
+              <div class="post-author-meta">
+                <strong>Anna Keller</strong>
+                <span>03.04.2026 · 14:41 Uhr</span>
+              </div>
+            </div>
+            <div class="post-badges">
+              <span class="badge visibility-public">Öffentlich</span>
+              <span class="badge status-current">Status: Öffentliche Konsultation</span>
+            </div>
+          </div>
+
+          <div class="post-body">
+            <p>
+              Frage aus Sicht einer umsetzenden Behörde: Soll <em>Postfach</em> als eigenständige
+              Komponente modelliert werden oder nur als Teil einer alternativen Repräsentation?
+            </p>
+          </div>
+
+          <div class="post-actions">
+            <span class="action-pill">💬 Antworten</span>
+            <span class="action-pill">✅ Als erledigt markieren</span>
+            <span class="action-pill">❓ 1</span>
+            <span class="action-pill">🚩 Post melden</span>
+          </div>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="post-author">
+              <div class="avatar gray">MF</div>
+              <div class="post-author-meta">
+                <strong>Michael Frei</strong>
+                <span>04.04.2026 · 08:27 Uhr</span>
+              </div>
+            </div>
+            <div class="post-badges">
+              <span class="badge visibility-private">Privat (eCH)</span>
+              <span class="badge">Status: Inhaltliche QS1</span>
+            </div>
+          </div>
+
+          <div class="post-body">
+            <p>
+              Historischer Hinweis: Der Punkt wurde bereits in QS1 diskutiert. Damals wurde entschieden,
+              vorerst keine zusätzliche Pflichtkomponente einzuführen. Die aktuelle Konsultation könnte
+              aber eine Neubewertung rechtfertigen.
+            </p>
+          </div>
+
+          <div class="post-actions">
+            <span class="action-pill">💬 Antworten</span>
+            <span class="action-pill">✅ Als erledigt markieren</span>
+            <span class="action-pill">📌 Wichtig</span>
+            <span class="action-pill">🚩 Post melden</span>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="new-post">
+        <h2 class="section-title">Neuen Post verfassen</h2>
+
+        <div class="new-post-grid">
+          <div class="field">
+            <label for="posttext">Inhalt</label>
+            <textarea id="posttext" placeholder="Deinen Beitrag zum Building Block verfassen …"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="visibility">Sichtbarkeit</label>
+            <select id="visibility">
+              <option>Öffentlich</option>
+              <option>Privat (eCH)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="poststatus">Statuskontext</label>
+            <select id="poststatus">
+              <option>Öffentliche Konsultation</option>
+              <option>Eingereicht</option>
+              <option>Erarbeitung</option>
+              <option>Formale QS1</option>
+              <option>Inhaltliche QS1</option>
+              <option>Übersetzung1</option>
+              <option>Einarbeitung Rückmeldungen</option>
+              <option>Formale QS2</option>
+              <option>Inhaltliche QS2</option>
+              <option>Abgelehnt</option>
+              <option>Genehmigt</option>
+              <option>Übersetzung2</option>
+              <option>Publikation</option>
+              <option>Überprüfung</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-primary">Post veröffentlichen</button>
+          <button class="btn">Als Entwurf speichern</button>
+        </div>
+
+        <div class="small-note">
+          Demo-Funktionen pro Kanal: Post schreiben, öffentlich/privat klassifizieren, Kanal schliessen,
+          RSS/E-Mail abonnieren sowie nach Type, Status, Person und Zeitraum filtern.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function toggleHistory() {
+      const panel = document.getElementById("historyPanel");
+      panel.classList.toggle("open");
+    }
+  </script>
+		
+	</td>
+	</tr>	  
+	  	  
+  </tbody>	
+</table>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

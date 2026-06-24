@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building Blocks - Document Composer</title>
+
+    <!-- Google Analytics 4 -->
+    <!-- Replace GA_MEASUREMENT_ID with your actual GA4 Measurement ID (format: G-XXXXXXXXXX) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1616KCSHZH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+    
+      // 2. Default Consent (Denied until user clicks Accept)
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'wait_for_update': 500
+      });
+    
+      gtag('js', new Date());
+    
+      // 3. Localhost Optimization
+      gtag('config', 'G-1616KCSHZH', {
+        'debug_mode': true,      // Enables GA4 DebugView
+        'cookie_domain': 'none'  // Essential for localhost:8080 stability
+      });
+    
+      // 4. Connect to your existing button IDs
+      document.addEventListener('DOMContentLoaded', () => {
+        const btnAccept = document.getElementById('btnAcceptAnalytics');
+        if (btnAccept) {
+          btnAccept.addEventListener('click', () => {
+            gtag('consent', 'update', {
+              'analytics_storage': 'granted'
+            });
+            console.log('GA4: Consent granted');
+          });
+        }
+      });
+    </script>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Analytics Consent Banner -->
+<div id="consentBanner" class="position-fixed bottom-0 start-0 end-0 bg-dark text-white p-3 shadow-lg" style="z-index: 9999; display: none;">
+    <div class="container-xxl">
+        <div class="row align-items-center g-3">
+            <div class="col-lg-8">
+                <p class="mb-0">
+                    <strong>Analytics & Privacy</strong><br>
+                    We use Google Analytics to understand which document version combinations work best together. This helps us improve the tool for everyone. No personal data is collected.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <button class="btn btn-light btn-sm me-2" id="btnAcceptAnalytics">Accept</button>
+                <button class="btn btn-outline-light btn-sm" id="btnDeclineAnalytics">Decline</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg mb-4">
+    <div class="container-xxl">
+        <a class="navbar-brand fw-bold" href="#">🧱 Building Blocks</a>
+        <div class="ms-auto d-flex gap-2">
+            <a href="index.html" class="btn btn-outline-light btn-sm no-print" title="Main Document Composer">
+                <i class="bi bi-arrow-left me-1"></i> Main Page
+            </a>
+            <a href="discussions.html" class="btn btn-outline-light btn-sm no-print" title="View All Discussions">
+                <i class="bi bi-chat-dots me-1"></i> All Discussions
+            </a>
+            <button class="btn btn-light btn-sm no-print" id="btnPrint" title="Print / Save to PDF">
+                <i class="bi bi-printer me-1"></i> Print / PDF
+            </button>
+            <button class="btn btn-outline-light btn-sm no-print" id="btnDownloadHtml" title="Download as .html">
+                <i class="bi bi-download me-1"></i> Download HTML
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-xxl">
+    <div class="row g-4">
+        <!-- Left: Controls -->
+        <div class="col-lg-5">
+            <div class="card section-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div>
+                            <h5 class="card-title mb-1">Configure Building Blocks</h5>
+                            <p class="text-secondary mb-3">Select building block versions for your document.</p>
+                        </div>
+                        <div class="sticky-actions no-print">
+                            <div class="btn-group">
+                                <button class="btn btn-outline-secondary btn-sm" id="btnUseLatest">Use latest</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="btnClear">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Document Title</label>
+                        <input class="form-control" id="docTitleInput" placeholder="e.g., Building Blocks Document" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Add Building Block</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="blockSearchInput"
+                                   placeholder="Type to search building blocks..."
+                                   autocomplete="off" />
+                            <button class="btn btn-primary" id="btnAddBlock" type="button">
+                                <i class="bi bi-plus-lg"></i> Add
+                            </button>
+                        </div>
+                        <div class="position-relative">
+                            <ul class="list-group position-absolute w-100" id="autocompleteList" style="z-index: 1000; display: none; max-height: 300px; overflow-y: auto;"></ul>
+                        </div>
+                    </div>
+
+                    <div id="sectionsContainer" class="vstack gap-3"></div>
+
+                    <hr class="my-4"/>
+
+                    <div class="row g-2 no-print">
+                        <div class="col-sm-6 d-grid">
+                            <button class="btn btn-primary" id="btnGenerate"><i class="bi bi-magic me-1"></i> Generate</button>
+                        </div>
+                        <div class="col-sm-6 d-grid">
+                            <button class="btn btn-outline-primary" id="btnCopy"><i class="bi bi-clipboard me-1"></i> Copy Document</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 small text-muted">
+                        Tip: Click <span class="badge bg-secondary">Use latest</span> to auto-select newest versions by date.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Preview -->
+        <div class="col-lg-7">
+            <div class="card preview-card">
+                <div class="card-body">
+                    <div class="print-header">
+                        <h1 id="printDocTitle"></h1>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between no-print">
+                        <h5 class="mb-0">Live Preview</h5>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <input type="radio" class="btn-check" name="viewMode" id="viewMarkdown" autocomplete="off" checked>
+                                <label class="btn btn-outline-secondary" for="viewMarkdown">Markdown</label>
+
+                                <input type="radio" class="btn-check" name="viewMode" id="viewJson" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="viewJson">JSON</label>
+                            </div>
+                            <span class="badge rounded-pill text-bg-light"><span id="updatedAt"></span></span>
+                        </div>
+                    </div>
+                    <div class="preview-area mt-3" id="previewArea" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Discussion Modal -->
+<div class="modal fade" id="discussionModal" tabindex="-1" aria-labelledby="discussionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discussionModalLabel">
+                    <i class="bi bi-chat-square-text me-2"></i>Create Discussion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="discussionBuildingBlock" />
+                <div class="alert alert-info small mb-3">
+                    <i class="bi bi-info-circle me-1"></i>
+                    This will create a discussion on GitHub for <strong id="discussionBuildingBlockName"></strong>
+                </div>
+                <div class="mb-3">
+                    <label for="discussionCategory" class="form-label">Category</label>
+                    <select class="form-select" id="discussionCategory" required>
+                        <option value="">Loading categories...</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="discussionTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="discussionTitle" placeholder="Brief summary of your topic" required />
+                </div>
+                <div class="mb-3">
+                    <label for="discussionBody" class="form-label">Description</label>
+                    <textarea class="form-control" id="discussionBody" rows="5" placeholder="Provide details about your question or suggestion..." required></textarea>
+                </div>
+                <div id="discussionError" class="alert alert-danger" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSubmitDiscussion">
+                    <i class="bi bi-send me-1"></i>Create Discussion
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Marked.js for Markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+<script src="js/building-blocks.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

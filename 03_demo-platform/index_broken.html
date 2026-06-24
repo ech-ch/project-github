@@ -1,0 +1,865 @@
+<!doctype html>
+<html>
+	
+<head>
+<meta charset="utf-8">
+<title>eCH Standards</title>
+<link rel="stylesheet" href="css/ech-style.css">
+	
+<style>
+	
+.ech-process-diagram {
+  position: relative;
+  height: 430px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.ech-process-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.flow-solid {
+  stroke: #4b5563;
+  stroke-width: 2.2;
+  fill: none;
+}
+
+.flow-dashed {
+  stroke: #9aa4af;
+  stroke-width: 2;
+  stroke-dasharray: 5 6;
+  fill: none;
+}
+
+.ech-step-row {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(140px, 1fr));
+  gap: 34px;
+  z-index: 2;
+}
+
+.top-row {
+  top: 40px;
+}
+
+.bottom-row {
+  top: 265px;
+}
+
+.ech-step-row .step {
+  min-height: 110px;
+  border: 1px solid var(--ng-border);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.ech-step-row .step-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.ech-step-row .step-meta {
+  font-size: 13px;
+  color: var(--ng-muted);
+  line-height: 1.4;
+}
+
+.public-step {
+  background: var(--ng-green-soft);
+  border-color: #cfe3d3;
+}
+
+.loop-step {
+  background: var(--ng-blue-soft);
+  border-color: #b7d7ee;
+}
+
+.publish-step {
+  background: #f4fbf5;
+  border-color: #cfe3d3;
+}
+
+.decision.approve {
+  background: var(--ng-orange-soft);
+  border-color: #f1d2a2;
+}
+
+@media (max-width: 1100px) {
+  .ech-process-diagram {
+    display: none;
+  }
+}
+	
+	
+</style>
+	
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+
+    <tr>
+		<td width="100"></td>
+      <td>
+        <img src="img/logo-ech.svg" alt="" width="300">
+      </td>
+      <td></td>
+      <td></td>
+	<td width="100"></td>
+    </tr>
+
+    <tr>
+	<td width="100"></td>
+      <td width="1029"></td>
+
+      <td width="100">
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Explorer</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="explorer_matrix.html">Interopmatrix</a></li>
+            <li><a href="http://localhost:7474/browser/">Graph</a></li>
+          </ul>
+
+        </div>
+      </td>
+
+      <td width="200">
+
+        <div class="nav-dropdown">
+
+          <a class="site-nav__link" href="#">Discussions</a>
+
+          <ul class="dropdown-menu">
+            <li><a href="standard-uebersicht.html">All</a></li>
+            <li><a href="fachgruppen.html">On-Going</a></li>
+          </ul>
+
+        </div>
+
+      </td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+    <tr height="50">
+		<td width="100" bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"><a class="dropdown-link" href="index.html">NormGraph</a> » <a class="dropdown-link" href="index.html">Explorer</a> » <a class="dropdown-link" href="explorer_matrix.html">Interopmatrix</a></td>
+      <td bgcolor="#f1f2f1"></td>
+      <td bgcolor="#f1f2f1"></td>
+		<td width="100" bgcolor="#f1f2f1"></td>
+    </tr>
+
+    <tr height="5">
+      <td></td>
+      <td></td>
+      <td></td>
+		<td width="100"></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<img src="img/chatgpt.png" alt=""/>
+
+	
+<table width="100%" border="0">
+  <tbody>
+	<tr>
+		<td width="100"></td>
+		<td><h1>Interopmatrix</h1></td>
+	</tr>
+	<tr>
+	<td width="100"></td>
+	<td>
+		
+
+	<section class="normgraph-overview">
+  <div class="ng-header">
+    <h2>NormGraph – System- und Prozessübersicht</h2>
+    <p>
+      Zusammenspiel von Drupal-Hauptseite, Web-App mit KI-Composer, Graph-DB, GitHub-Publikation
+      sowie dem Lifecycle der Building Blocks.
+    </p>
+  </div>
+
+  <div class="ng-legend">
+    <span><i class="lg lg-system"></i> System</span>
+    <span><i class="lg lg-data"></i> Daten / Repository</span>
+    <span><i class="lg lg-process"></i> Prozessschritt</span>
+    <span><i class="lg lg-publish"></i> Publikation</span>
+  </div>
+
+  <div class="ng-grid">
+
+    <!-- SYSTEME -->
+    <div class="ng-panel ng-systems">
+      <h3>Systeme</h3>
+
+      <div class="ng-card system drupal" data-target="drupal-info">
+        <div class="ng-card-title">Drupal-Hauptseite</div>
+        <div class="ng-card-text">
+          Öffentliche eCH-Hauptseite auf demselben Server. Einstiegspunkt, Navigation,
+          allgemeine Informationen und Verlinkung zur Web-App.
+        </div>
+      </div>
+
+      <div class="ng-arrow down">↓</div>
+
+      <div class="ng-card system webapp" data-target="webapp-info">
+        <div class="ng-card-title">Web-App inkl. KI-Composer</div>
+        <div class="ng-card-text">
+          Prototypische Fachanwendung für Building Blocks, Interopmatrix, Versionsseiten,
+          Diskussionskanäle, Filter, Ratings und KI-gestützte Komposition.
+        </div>
+      </div>
+
+      <div class="ng-system-row">
+        <div class="ng-card data graphdb" data-target="graphdb-info">
+          <div class="ng-card-title">Graph-DB</div>
+          <div class="ng-card-text">
+            Alle BBs als Knoten mit Content, Metadaten und Kompatibilitäten zu anderen BBs.
+          </div>
+        </div>
+
+        <div class="ng-card publish github" data-target="github-info">
+          <div class="ng-card-title">GitHub Repository</div>
+          <div class="ng-card-text">
+            Genehmigte Versionen werden automatisiert als maschinenlesbare Artefakte publiziert.
+          </div>
+        </div>
+      </div>
+
+      <div class="ng-linkline">
+        <span>Web-App liest und schreibt fachliche Daten in die Graph-DB</span>
+      </div>
+      <div class="ng-linkline publish-line">
+        <span>Genehmigte Versionen werden automatisiert nach GitHub gepusht</span>
+      </div>
+    </div>
+
+    <!-- APP-FUNKTIONEN -->
+    <div class="ng-panel ng-functions">
+      <h3>Funktionen in der Web-App</h3>
+
+      <div class="function-list">
+        <div class="function-item">Übersicht aller Building Blocks / Interopmatrix</div>
+        <div class="function-item">BB-Detailseiten mit Versionen, Kennzahlen und Ratings</div>
+        <div class="function-item">Diskussionskanäle pro Version</div>
+        <div class="function-item">Posts, Antworten, Emoji, Erledigt-Markierung</div>
+        <div class="function-item">Filter nach Type, Status, Person und Zeitraum</div>
+        <div class="function-item">Öffentlich / Privat(eCH) pro Post</div>
+        <div class="function-item">Statushistorie pro Kanal und pro Version</div>
+        <div class="function-item">Abonnements via RSS und E-Mail</div>
+        <div class="function-item">KI-Composer zur Kombination kompatibler BBs</div>
+        <div class="function-item">Links auf GitHub-Artefakte und maschinenlesbare Files</div>
+      </div>
+    </div>
+
+    <!-- DATENMODELL -->
+    <div class="ng-panel ng-datamodel">
+      <h3>Graph-DB – Modell</h3>
+
+      <div class="mini-graph">
+        <div class="node bb-node">BB Version</div>
+        <div class="edge-label">enthält</div>
+        <div class="node small">Content</div>
+        <div class="node small">Metadaten</div>
+        <div class="node small">Status</div>
+        <div class="node small">Standards</div>
+        <div class="node small">Schnittstellen</div>
+        <div class="node small">Formate</div>
+        <div class="edge-label">kompatibel mit</div>
+        <div class="node bb-node alt">anderen BB-Versionen</div>
+      </div>
+
+      <div class="ng-note">
+        Knoten repräsentieren BB-Versionen. Kanten modellieren Kompatibilitäten,
+        Zugehörigkeiten zu Standards sowie weitere Beziehungen.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROZESS -->
+  <div class="ng-process-panel">
+  <h3>Prozess und Abhängigkeit zu den Systemen</h3>
+
+  <div class="ech-process-diagram">
+
+    <svg class="ech-process-lines" viewBox="0 0 1200 430" aria-hidden="true">
+      <!-- obere Reihe -->
+      <line x1="150" y1="95" x2="230" y2="95" class="flow-solid"></line>
+      <line x1="330" y1="95" x2="410" y2="95" class="flow-solid"></line>
+      <line x1="510" y1="95" x2="590" y2="95" class="flow-solid"></line>
+      <line x1="690" y1="95" x2="770" y2="95" class="flow-solid"></line>
+      <line x1="870" y1="95" x2="950" y2="95" class="flow-solid"></line>
+
+      <!-- nach unten -->
+      <line x1="1010" y1="150" x2="1010" y2="265" class="flow-solid"></line>
+
+      <!-- untere Reihe -->
+      <line x1="950" y1="320" x2="870" y2="320" class="flow-solid"></line>
+      <line x1="770" y1="320" x2="690" y2="320" class="flow-solid"></line>
+      <line x1="590" y1="320" x2="510" y2="320" class="flow-solid"></line>
+      <line x1="410" y1="320" x2="330" y2="320" class="flow-solid"></line>
+      <line x1="230" y1="320" x2="150" y2="320" class="flow-solid"></line>
+
+      <!-- Rücksprünge -->
+      <path d="M 500 65 C 500 20, 80 20, 80 95" class="flow-dashed"></path>
+      <path d="M 860 150 C 860 210, 980 210, 980 95" class="flow-dashed"></path>
+      <path d="M 860 290 C 860 230, 980 230, 980 150" class="flow-dashed"></path>
+      <path d="M 600 350 C 600 395, 110 395, 110 150 L 110 125" class="flow-dashed"></path>
+    </svg>
+
+    <div class="ech-step-row top-row">
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Erarbeitung</div>
+        <div class="step-meta">Bearbeitung von Content und Metadaten in der Web-App; Speicherung in Graph-DB</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Formale QS 1</div>
+        <div class="step-meta">Prüfung formaler Vollständigkeit, Felder, Referenzen und Formate</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Inhaltliche QS 1</div>
+        <div class="step-meta">Fachliche Diskussion, Kommentare und Rückmeldungen</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Übersetzung 1</div>
+        <div class="step-meta">Frühe Sprachversionen und Terminologieabgleich</div>
+      </div>
+
+      <div class="step public-step" data-systems="drupal webapp graphdb">
+        <div class="step-title">Öffentliche Konsultation</div>
+        <div class="step-meta">Öffentliche Sichtbarkeit über eCH-Seite und Web-App</div>
+      </div>
+
+      <div class="step loop-step" data-systems="webapp graphdb">
+        <div class="step-title">Einarbeitung Rückmeldungen</div>
+        <div class="step-meta">Überarbeitung nach QS oder Konsultation</div>
+      </div>
+    </div>
+
+    <div class="ech-step-row bottom-row">
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Überprüfung</div>
+        <div class="step-meta">Monitoring, Revision und Vorbereitung neuer Versionen</div>
+      </div>
+
+      <div class="step publish-step" data-systems="drupal webapp graphdb github">
+        <div class="step-title">Publikation</div>
+        <div class="step-meta">Öffentliche Darstellung und Verlinkung publizierter Artefakte</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb github">
+        <div class="step-title">Übersetzung 2</div>
+        <div class="step-meta">Publikationsreife Sprachversionen</div>
+      </div>
+
+      <div class="step decision approve" data-systems="webapp graphdb github">
+        <div class="step-title">Genehmigung / Ablehnung</div>
+        <div class="step-meta">Freigabe oder Rückweisung der Version</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Inhaltliche QS 2</div>
+        <div class="step-meta">Abschliessende fachliche Prüfung, ggf. Rücksprung</div>
+      </div>
+
+      <div class="step" data-systems="webapp graphdb">
+        <div class="step-title">Formale QS 2</div>
+        <div class="step-meta">Erneute formale Prüfung der finalisierten Version</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-notes">
+    <div class="flow-box">
+      <strong>Rücksprung 1:</strong> Aus <em>Inhaltliche QS 1</em> zurück zu <em>Erarbeitung</em>.
+    </div>
+    <div class="flow-box">
+      <strong>Rücksprung 2:</strong> Aus <em>Öffentliche Konsultation</em> und <em>Inhaltliche QS 2</em> zurück zu <em>Einarbeitung Rückmeldungen</em>.
+    </div>
+    <div class="flow-box">
+      <strong>Rücksprung 3:</strong> Bei <em>Ablehnung</em> zurück zu <em>Erarbeitung</em>. Bei <em>Genehmigung</em> folgen Übersetzung 2 und Publikation.
+    </div>
+  </div>
+</div>
+
+  <!-- DETAILS -->
+  <div class="ng-detail-panels">
+    <div class="detail-box" id="drupal-info">
+      <h4>Drupal-Hauptseite</h4>
+      <p>
+        Die Drupal-Seite bildet die öffentlich sichtbare eCH-Hauptumgebung. Von hier wird auf die
+        spezialisierte Web-App verwiesen. Sie dient insbesondere der allgemeinen Kommunikation,
+        Navigation und öffentlichen Einbettung publizierter Inhalte.
+      </p>
+    </div>
+
+    <div class="detail-box" id="webapp-info">
+      <h4>Web-App inkl. KI-Composer</h4>
+      <p>
+        Die Web-App ist die operative Arbeitsumgebung. Hier befinden sich Interopmatrix,
+        BB-Detailseiten, Versionshistorie, Diskussionskanäle, Kennzahlen, Filter und der KI-Composer
+        zur Zusammenstellung kompatibler Building Blocks.
+      </p>
+    </div>
+
+    <div class="detail-box" id="graphdb-info">
+      <h4>Graph-DB</h4>
+      <p>
+        Die Graph-Datenbank speichert alle BB-Versionen als Knoten inklusive Content, Metadaten und
+        Beziehungen. Dadurch lassen sich Kompatibilitäten, Standardzuordnungen und spätere
+        KI-gestützte Kompositionsvorschläge modellieren.
+      </p>
+    </div>
+
+    <div class="detail-box" id="github-info">
+      <h4>GitHub Repository</h4>
+      <p>
+        Nach Genehmigung wird eine Version automatisiert als maschinenlesbare Ressource publiziert,
+        etwa JSON-Dateien und zugehörige Abbildungen. Diese Artefakte werden von der Web-App verlinkt
+        und können öffentlich konsumiert werden.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .normgraph-overview {
+    --ng-bg: #ffffff;
+    --ng-surface: #ffffff;
+    --ng-surface-soft: #f8fafb;
+    --ng-border: #d9e0e5;
+    --ng-text: #1f2a37;
+    --ng-muted: #6b7280;
+    --ng-blue: #0071bb;
+    --ng-blue-soft: #eaf4fb;
+    --ng-green: #4d7c57;
+    --ng-green-soft: #edf6ef;
+    --ng-orange: #b7791f;
+    --ng-orange-soft: #fff6e8;
+    --ng-purple: #6f42c1;
+    --ng-purple-soft: #f3edff;
+    --ng-red: #b42318;
+    --ng-red-soft: #fef3f2;
+    --ng-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    --ng-radius: 16px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ng-text);
+    background: var(--ng-bg);
+  }
+
+  .normgraph-overview * {
+    box-sizing: border-box;
+  }
+
+  .ng-header {
+    margin-bottom: 18px;
+  }
+
+  .ng-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .ng-header p {
+    margin: 0;
+    color: var(--ng-muted);
+    font-size: 15px;
+    max-width: 980px;
+  }
+
+  .ng-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid var(--ng-border);
+    border-radius: 12px;
+    background: var(--ng-surface-soft);
+    font-size: 13px;
+  }
+
+  .ng-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lg {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .lg-system { background: var(--ng-blue); }
+  .lg-data { background: var(--ng-purple); }
+  .lg-process { background: var(--ng-orange); }
+  .lg-publish { background: var(--ng-green); }
+
+  .ng-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .ng-panel,
+  .ng-process-panel,
+  .detail-box {
+    border: 1px solid var(--ng-border);
+    background: var(--ng-surface);
+    border-radius: var(--ng-radius);
+    box-shadow: var(--ng-shadow);
+  }
+
+  .ng-panel {
+    padding: 20px;
+  }
+
+  .ng-panel h3,
+  .ng-process-panel h3,
+  .detail-box h4 {
+    margin: 0 0 14px 0;
+    font-size: 20px;
+  }
+
+  .ng-card {
+    border: 1px solid var(--ng-border);
+    border-radius: 14px;
+    padding: 16px;
+    background: #fff;
+    margin-bottom: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    cursor: default;
+  }
+
+  .ng-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  }
+
+  .ng-card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .ng-card-text {
+    font-size: 14px;
+    color: var(--ng-muted);
+    line-height: 1.45;
+  }
+
+  .drupal { border-left: 6px solid var(--ng-green); background: var(--ng-green-soft); }
+  .webapp { border-left: 6px solid var(--ng-blue); background: var(--ng-blue-soft); }
+  .graphdb { border-left: 6px solid var(--ng-purple); background: var(--ng-purple-soft); }
+  .github { border-left: 6px solid var(--ng-orange); background: var(--ng-orange-soft); }
+
+  .ng-arrow.down {
+    text-align: center;
+    font-size: 28px;
+    color: var(--ng-muted);
+    margin: 4px 0 10px 0;
+  }
+
+  .ng-system-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 6px;
+  }
+
+  .ng-linkline {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--ng-muted);
+    border: 1px dashed #cfd8df;
+  }
+
+  .publish-line {
+    background: #f6fbf7;
+  }
+
+  .function-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .function-item {
+    padding: 12px 14px;
+    border: 1px solid var(--ng-border);
+    border-radius: 12px;
+    background: var(--ng-surface-soft);
+    font-size: 14px;
+  }
+
+  .mini-graph {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    padding: 8px 0 4px 0;
+  }
+
+  .node {
+    border: 1px solid var(--ng-border);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    background: #fff;
+    text-align: center;
+  }
+
+  .bb-node {
+    background: var(--ng-blue-soft);
+    color: var(--ng-blue);
+    min-width: 170px;
+  }
+
+  .bb-node.alt {
+    background: var(--ng-purple-soft);
+    color: var(--ng-purple);
+  }
+
+  .node.small {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 12px;
+    background: var(--ng-surface-soft);
+  }
+
+  .edge-label {
+    font-size: 12px;
+    color: var(--ng-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .ng-note {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ng-muted);
+    padding: 12px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cfd8df;
+  }
+
+  .ng-process-panel {
+    padding: 22px;
+    margin-bottom: 22px;
+  }
+
+  .process-strip {
+    display: grid;
+    grid-template-columns: repeat(13, minmax(180px, 1fr));
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .step {
+    min-height: 170px;
+    border: 1px solid var(--ng-border);
+    border-radius: 14px;
+    padding: 14px;
+    background: #fff;
+    position: relative;
+  }
+
+  .step::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    right: -12px;
+    width: 12px;
+    height: 2px;
+    background: #cfd8df;
+  }
+
+  .step:last-child::before {
+    display: none;
+  }
+
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .step-meta {
+    font-size: 13px;
+    color: var(--ng-muted);
+    line-height: 1.45;
+  }
+
+  .public-step {
+    background: var(--ng-green-soft);
+    border-color: #cfe3d3;
+  }
+
+  .loop-step {
+    background: var(--ng-blue-soft);
+    border-color: #b7d7ee;
+  }
+
+  .publish-step {
+    background: #f4fbf5;
+    border-color: #cfe3d3;
+  }
+
+  .decision.approve {
+    background: var(--ng-green-soft);
+    border-color: #cfe3d3;
+  }
+
+  .decision.reject {
+    background: var(--ng-red-soft);
+    border-color: #f1c6c1;
+  }
+
+  .flow-notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .flow-box {
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--ng-surface-soft);
+    border: 1px solid var(--ng-border);
+    font-size: 14px;
+  }
+
+  .ng-detail-panels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .detail-box {
+    padding: 18px;
+  }
+
+  .detail-box p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ng-muted);
+    line-height: 1.5;
+  }
+
+  .highlight-system {
+    box-shadow: 0 0 0 3px rgba(0, 113, 187, 0.15);
+    border-color: var(--ng-blue);
+  }
+
+  .dimmed-system {
+    opacity: 0.45;
+  }
+
+  @media (max-width: 1200px) {
+    .ng-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ng-detail-panels {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .ng-system-row,
+    .flow-notes,
+    .ng-detail-panels {
+      grid-template-columns: 1fr;
+    }
+
+    .ng-header h2 {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const steps = document.querySelectorAll('.normgraph-overview .step');
+    const systemCards = {
+      drupal: document.querySelector('.normgraph-overview .drupal'),
+      webapp: document.querySelector('.normgraph-overview .webapp'),
+      graphdb: document.querySelector('.normgraph-overview .graphdb'),
+      github: document.querySelector('.normgraph-overview .github')
+    };
+
+    function resetSystems() {
+      Object.values(systemCards).forEach(card => {
+        if (!card) return;
+        card.classList.remove('highlight-system', 'dimmed-system');
+      });
+    }
+
+    steps.forEach(step => {
+      step.addEventListener('mouseenter', () => {
+        const active = (step.dataset.systems || '').split(/\s+/).filter(Boolean);
+        Object.entries(systemCards).forEach(([key, card]) => {
+          if (!card) return;
+          if (active.includes(key)) {
+            card.classList.add('highlight-system');
+            card.classList.remove('dimmed-system');
+          } else {
+            card.classList.remove('highlight-system');
+            card.classList.add('dimmed-system');
+          }
+        });
+      });
+
+      step.addEventListener('mouseleave', resetSystems);
+    });
+  })();
+</script>
+		
+		
+	</td>
+	</tr>	  
+	  	  
+  </tbody>	
+</table>
+	
+</body>
+</html>
