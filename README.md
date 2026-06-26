@@ -1,6 +1,6 @@
 <img src="01_project-context/eCH_logo/logo.svg" alt="Logo eCH" width="260" align="right">
 
-# eCH Standards as Building Blocks
+# Beyond PDF - eCH Standards as Building Blocks
 
 ## Überblick
 
