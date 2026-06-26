@@ -1,12 +1,13 @@
 <img src="01_project-context/eCH_logo/logo.svg" alt="Logo eCH" width="260" align="right">
 
-# Beyond PDF - eCH Standards as Building Blocks
+# Beyond PDF: eCH Standards as Building Blocks
+## Innovative Standardisierung im eGovernment
 
 ## Überblick
 
 Dieses Repository dokumentiert die Ergebnisse und Arbeitsartefakte eines gemeinsamen Projekts von eCH und der ZHAW zur Weiterentwicklung des Umgangs mit eCH-Standards.
 
-Ausgangspunkt des Projekts ist die Frage, wie eCH-Standards künftig besser beobachtet, gepflegt, weiterentwickelt und in unterschiedlichen Nutzungskontexten nachvollziehbar eingesetzt werden können. Im Zentrum steht dabei die Idee, Standards nicht nur als monolithische Dokumente zu betrachten, sondern sie in kleinere, fachlich sinnvolle und wiederverwendbare **Building Blocks** zu strukturieren.
+Ausgangspunkt des Projekts ist die Frage, wie eCH-Standards künftig besser **beobachtet, gepflegt, weiterentwickelt** und in unterschiedlichen Nutzungskontexten nachvollziehbar eingesetzt werden können. Im Zentrum steht dabei die Idee, Standards nicht nur als monolithische Dokumente zu betrachten, sondern sie in kleinere, fachlich sinnvolle und wiederverwendbare **Building Blocks** zu strukturieren.
 
 Eine solche Struktur kann dazu beitragen, Abhängigkeiten zwischen Standards transparenter zu machen, Überarbeitungsbedarf gezielter zu erkennen, Wiederverwendung über Standards hinweg zu unterstützen und langfristig eine maschinenlesbare Grundlage für Monitoring, Kompatibilitätsanalysen und digitale Plattformfunktionen zu schaffen.
 
@@ -27,7 +28,7 @@ Dadurch sollen insbesondere folgende Anliegen unterstützt werden:
 
 ## Ziel des Projekts
 
-Das Projekt verfolgt das Ziel, Grundlagen für ein verbessertes Monitoring und eine strukturiertere Weiterentwicklung von eCH-Standards zu schaffen.
+Das Projekt verfolgt das Ziel, Grundlagen für eine a) anwendungsorientiertere Nutzbarkeit, b) eine strukturiertere Pflege und Weiterentwicklung und c) ein verbessertes Monitoring von eCH-Standards zu schaffen.
 
 Dazu werden insbesondere folgende Fragen bearbeitet:
 
@@ -40,20 +41,40 @@ Dazu werden insbesondere folgende Fragen bearbeitet:
 
 ## Roadmap ab Juli 2026
 
-Die folgende Roadmap zeigt das geplante weitere Vorgehen. Sie fokussiert auf die Anschlusspakete 1 bis 3 und beschreibt, wie die bisherigen Ergebnisse schrittweise in eine praxistaugliche Arbeitsgrundlage für eCH, die Fachgruppen und eine mögliche technische Plattform überführt werden sollen.
+Die folgende Roadmap zeigt das geplante weitere Vorgehen. Sie fokussiert auf die Anschlusspakete 1 bis 3 und beschreibt, wie die bisherigen Ergebnisse schrittweise in eine praxistaugliche Arbeitsgrundlage für eCH, die Fachgruppen und eine mögliche technische Plattform überführt werden sollen. Ergänzend ist ein begleitendes Arbeitspaket vorgesehen, in dem der Einsatz von KI über alle Projektphasen hinweg praxisorientiert erprobt und reflektiert wird.
 
 ![Roadmap ab Juli 2026](06_roadmap/figures/roadmap-ech-board.png)
+
+## Begleitendes Arbeitspaket: KI-gestützte Standardentwicklung und Kompetenzaufbau
+
+Das begleitende Arbeitspaket erstreckt sich über alle drei Anschlusspakete. Gemeinsam mit der ZHAW werden geeignete KI-Anwendungsfälle identifiziert, praktisch erprobt und methodisch reflektiert. Die beteiligten Personen und Fachgruppen werden durch Schulungen, Coaching und konkrete Hilfsmittel beim verantwortungsvollen Einsatz von KI unterstützt.
+
+Mögliche Anwendungsbereiche sind insbesondere die Gliederung von Standards in Building Blocks, die Erarbeitung und Prüfung von Metadaten, die Identifikation von Beziehungen und Abhängigkeiten sowie die Unterstützung bei Recherche, Dokumentation und Qualitätssicherung. Die gewonnenen Erfahrungen sollen abschliessend in Handlungsempfehlungen für den weiteren Einsatz von KI in der Standardentwicklung überführt werden.
+
+## Anschlusspakete
 
 Die Roadmap gliedert das weitere Vorgehen in drei Anschlusspakete:
 
 1. **Anschlusspaket 1: Weiterentwicklung der Building Blocks durch Fachgruppen**
-   Fachgruppen arbeiten an ausgewählten Standards, gliedern diese in Building Blocks und helfen mit, die Guidelines anhand praktischer Erfahrungen zu verfeinern. Dabei wird insbesondere geprüft, wie Building Blocks eigenständig beschrieben, versioniert und mit anderen Building Blocks verknüpft werden können. Vorgelagert definiert eine Expertengruppe zentrale Verknüpfungen über Standards hinweg.
 
-3. **Anschlusspaket 2: eCH-Browser (DB, Interop-Matrix)**
-   Die Ergebnisse aus Anschlusspaket 1 werden in eine technische Struktur überführt. Dazu gehören ein Datenmodell, eine Datenbankstruktur, eine Interoperabilitätsmatrix und eine erste Browser-Demo.
+   In einer vorgelagerten Initialisierungsphase definiert eine Expertengruppe zentrale Beziehungstypen und Verknüpfungen über Standards hinweg. Gleichzeitig werden erste Hilfsmittel für die Beschreibung der Building Blocks, die Erfassung von Metadaten sowie den Review- und Diskussionsprozess vorbereitet.
 
-4. **Anschlusspaket 3: NormBrowser**
-   Aufbauend auf den Ergebnissen aus Anschlusspaket 1 und 2 wird die Logik eines NormBrowsers weiterentwickelt. Ziel ist eine MVP-Demo, welche zentrale Navigations- und Darstellungsmöglichkeiten demonstriert.
+   Anschliessend bearbeiten die Fachgruppen ausgewählte Standards in drei aufeinanderfolgenden Iterationen. Sie gliedern die Standards in Building Blocks, dokumentieren relevante Metadaten und Verknüpfungen und reflektieren die bereitgestellten Guidelines anhand ihrer praktischen Erfahrungen.
+
+   Zwischen den Iterationen wertet die Expertengruppe die gewonnenen Erkenntnisse aus und bereitet die jeweils nächste Iteration vor. Dadurch können das Verknüpfungssystem, die Hilfsmittel und die Guidelines schrittweise verfeinert werden.
+
+2. **Anschlusspaket 2: eCH-Browser (DB, Interop-Matrix)**
+
+   Die Ergebnisse aus Anschlusspaket 1 werden in eine technische Struktur überführt. Dazu werden ein geeignetes Datenmodell und eine Datenbankstruktur definiert sowie eine Interoperabilitätsmatrix aufgebaut. Die in den Fachgruppen erarbeiteten Building Blocks, Metadaten und Verknüpfungen werden als Pilotdaten integriert.
+
+   Darauf aufbauend wird eine erste Browser-Demo bereitgestellt, mit der die technische Machbarkeit und die strukturierte Nutzung der erarbeiteten Inhalte demonstriert werden können.
+
+3. **Anschlusspaket 3: NormBrowser**
+
+   Aufbauend auf den Ergebnissen aus den Anschlusspaketen 1 und 2 wird die Logik eines NormBrowsers weiterentwickelt. Dazu werden geeignete Navigationslogiken und Ansichten definiert und die Integration mit dem eCH-Browser und der Interoperabilitätsmatrix geprüft.
+
+   Ziel ist eine demonstrierbare MVP-Version, welche zentrale Navigations-, Such- und Darstellungsmöglichkeiten eines zukünftigen NormBrowsers exemplarisch aufzeigt.
+
 
 ## Inhalt dieses Repositorys
 
