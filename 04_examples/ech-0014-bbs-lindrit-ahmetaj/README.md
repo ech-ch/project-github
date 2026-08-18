@@ -4,6 +4,8 @@
 >
 **Autor:** Lindrit Ahmetaj · **Betreuung:** Maria Rothstein · **Abgabe:** 27. Mai 2026
 
+**Kontaktdaten von Lindrit Ahmetaj:** lindritahmetaj@hotmail.com, LinkedIn: https://www.linkedin.com/in/lindrit/
+
 Dieses Repository enthält das vollständige Implementationsartefakt zur Bachelor-Thesis: eine dreistufige Pipeline, die den Schweizer eGovernment-Standard **eCH-0014 SAGA.ch V8.0** von der PDF-Vorlage in einen abfragbaren Neo4j-Wissensgraphen überführt und mit einer KI-gestützten Abfrageschicht ergänzt.
 
 ---
