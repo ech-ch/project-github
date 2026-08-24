@@ -4,10 +4,6 @@
 
 Dieser Bereich enthält Präsentationen, Workshop-Unterlagen und Aufzeichnungen aus dem Projekt **«GitHub für eCH-Standards»**. Die Materialien dokumentieren zentrale Projektstände, Ergebnisse und Weiterentwicklungen und unterstützen den Wissenstransfer innerhalb des Projekts sowie mit den beteiligten Fachgruppen und weiteren Interessierten.
 
-## Hintergrund
-
-Das Projekt untersucht, wie eCH-Standards künftig modularer, nachvollziehbarer und maschinenlesbarer bereitgestellt werden können. Präsentationen und Workshops dienen dazu, Zwischenergebnisse vorzustellen, Rückmeldungen einzuholen und das gemeinsame Verständnis der Building-Block-Logik sowie der geplanten digitalen Arbeitsweise weiterzuentwickeln.
-
 ## Inhalt dieses Ordners
 
 | Datei | Inhalt |
@@ -17,7 +13,7 @@ Das Projekt untersucht, wie eCH-Standards künftig modularer, nachvollziehbarer 
 | [`2026-08-24_Lunchsession.pdf`](2026-08-24_Lunchsession.pdf) | Präsentationsunterlagen zur Lunchsession vom 24. August 2026 mit einem Update zum Projekt «Beyond PDF» |
 | [`2026-08-24_Lunchsession.mp4`](2026-08-24_Lunchsession.mp4) | Videoaufzeichnung der Lunchsession vom 24. August 2026 |
 
-## Videoaufzeichnung der Lunchsession
+## NEU: Videoaufzeichnung der Lunchsession
 
 Die Aufzeichnung der Lunchsession vom 24. August 2026 kann direkt im Browser über GitHub Pages abgespielt werden:
 
