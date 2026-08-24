@@ -2,7 +2,7 @@
 
 [Repository Home](../README.md) > Demo-Plattform
 
-Die Demo-Plattform ist [unter diesem Link live verfügbar](https://ech-ch.github.io/project-github/03_demo-platform/) und kann direkt im Browser aufgerufen und erkundet werden.
+Die Demo-Plattform ist <a href="https://ech-ch.github.io/project-github/03_demo-platform/" target="_blank" rel="noopener noreferrer">unter diesem Link live verfügbar</a> und kann direkt im Browser aufgerufen und erkundet werden.
 
 ---
 
