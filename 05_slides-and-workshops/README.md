@@ -13,10 +13,9 @@ Dieser Bereich enthält Präsentationen, Workshop-Unterlagen und Aufzeichnungen 
 | [`2026-08-24_Lunchsession.pdf`](2026-08-24_Lunchsession.pdf) | Präsentationsunterlagen zur Lunchsession vom 24. August 2026 mit einem Update zum Projekt «Beyond PDF» |
 | [`2026-08-24_Lunchsession.mp4`](2026-08-24_Lunchsession.mp4) | Videoaufzeichnung der Lunchsession vom 24. August 2026 |
 
-## NEU: Videoaufzeichnung der Lunchsession
+## NEU: Videoaufzeichnung der Lunchsession vom 24. August 2026
 
-Die Aufzeichnung der Lunchsession vom 24. August 2026 kann direkt im Browser über GitHub Pages abgespielt werden:
-
+Die Aufzeichnung der Lunchsession kann direkt im Browser über GitHub Pages abgespielt werden:
 **[Video der Lunchsession ansehen](https://ech-ch.github.io/project-github/05_slides-and-workshops/2026-08-24_Lunchsession.mp4)**
 
 Die zugehörigen Präsentationsfolien stehen als [`PDF-Datei`](2026-08-24_Lunchsession.pdf) zur Verfügung.
