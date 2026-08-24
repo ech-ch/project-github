@@ -155,6 +155,8 @@ Die Weiterentwicklung der Inhalte soll schrittweise und gemeinsam mit eCH und de
 * mögliche Plattformfunktionen für Navigation, Monitoring und Interoperabilitätsanalysen;
 * organisatorische Fragen zur Pflege und Weiterentwicklung der Inhalte.
 
+> **Hinweis zur Teilnahme:** Die [Diskussionen in diesem Repository](https://github.com/ech-ch/project-github/discussions) sind öffentlich und können ohne GitHub-Konto gelesen werden. Um selbst Beiträge zu verfassen, auf Beiträge zu antworten oder Reaktionen abzugeben, ist jedoch ein GitHub-Konto erforderlich.
+
 ## Hinweis
 
 Dieses Repository ist Teil eines explorativen Projekts. Es zeigt mögliche Wege auf, wie eCH-Standards künftig modularer, nachvollziehbarer und maschinenlesbarer beschrieben werden könnten. Die hier enthaltenen Inhalte stellen noch keinen verbindlichen eCH-Prozess und keine abschliessende technische Architektur dar.
