@@ -96,7 +96,7 @@ Das folgende Bild visualisiert die Grundidee des Projekts: eCH-Standards bestehe
 
 ![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbolic-project-picture/symbol_project_picture_eCH_ZHAW.png)
 
-![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbol_project_picture_eCH_ZHAW_Zoom)
+![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbolic-project-picture/symbol_project_picture_eCH_ZHAW_Zoom.png)
 
 Im Zentrum steht die Idee der Building Blocks: Standards können in fachlich sinnvolle Bausteine gegliedert werden. Diese Bausteine lassen sich beschreiben, versionieren, miteinander verbinden und hinsichtlich ihrer Nutzung, Aktualität und Abhängigkeiten beobachten.
 
