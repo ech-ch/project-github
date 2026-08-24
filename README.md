@@ -94,7 +94,7 @@ Dieses Repository enthält die zentralen Artefakte des Projekts. Die Struktur fo
 
 Das folgende Bild visualisiert die Grundidee des Projekts: eCH-Standards bestehen aus vielen miteinander verbundenen Elementen, die in unterschiedlichen Kontexten genutzt, bewertet, überarbeitet und kombiniert werden. Diese Komplexität wird bewusst als vernetzte Landschaft dargestellt.
 
-![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbolic-project-picture/symbol_project_picture_eCH_ZHAW.png)
+<!--![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbolic-project-picture/symbol_project_picture_eCH_ZHAW.png)-->
 
 ![Symbolisches Projektbild: eCH-Standards als vernetzte Building-Block-Landschaft](01_project-context/symbolic-project-picture/symbol_project_picture_eCH_ZHAW_Zoom.png)
 
