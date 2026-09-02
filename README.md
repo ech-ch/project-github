@@ -5,7 +5,7 @@
 
 ## Überblick
 
-Dieses Repository dokumentiert die Ergebnisse und Arbeitsartefakte eines gemeinsamen Projekts von eCH und der ZHAW zur Weiterentwicklung des Umgangs mit eCH-Standards.
+Dieses Repository dokumentiert die Ergebnisse und Arbeitsartefakte eines gemeinsamen Projekts von eCH und der [ZHAW](https://www.zhaw.ch/de/forschung/projekt/81074) zur Weiterentwicklung des Umgangs mit eCH-Standards.
 
 Ausgangspunkt des Projekts ist die Frage, wie eCH-Standards künftig besser **beobachtet, gepflegt, weiterentwickelt** und in unterschiedlichen Nutzungskontexten nachvollziehbar eingesetzt werden können. Im Zentrum steht dabei die Idee, Standards nicht nur als monolithische Dokumente zu betrachten, sondern sie in kleinere, fachlich sinnvolle und wiederverwendbare **Building Blocks** zu strukturieren.
 
