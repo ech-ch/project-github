@@ -168,4 +168,5 @@ Dieses Repository ist Teil eines explorativen Projekts. Es zeigt mögliche Wege 
 | Projektleitung | [Maria Rothstein](https://www.zhaw.ch/de/ueber-uns/person/pell) | ZHAW |
 | Stellvertretende Projektleitung | [Dr. Christian Hitz](https://www.zhaw.ch/de/ueber-uns/person/hitz) | ZHAW |
 | Co-Projektleitung | Dominic Müller | Verein eCH |
-| Projektteam | Daniel Keller, Elias Mayer und Martin Rüfenacht | Verein eCH | [Dr. Alexander Mertes](https://www.zhaw.ch/de/ueber-uns/person/mert), [Dr. Achim Lang](https://www.zhaw.ch/de/ueber-uns/person/lanhv) | ZHAW |
+| Projektteam | Daniel Keller, Elias Mayer und Martin Rüfenacht | Verein eCH |
+| Projektteam | [Dr. Alexander Mertes](https://www.zhaw.ch/de/ueber-uns/person/mert) und [Dr. Achim Lang](https://www.zhaw.ch/de/ueber-uns/person/lanhv) | ZHAW |
