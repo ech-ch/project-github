@@ -160,3 +160,12 @@ Die Weiterentwicklung der Inhalte soll schrittweise und gemeinsam mit eCH und de
 ## Hinweis
 
 Dieses Repository ist Teil eines explorativen Projekts. Es zeigt mögliche Wege auf, wie eCH-Standards künftig modularer, nachvollziehbarer und maschinenlesbarer beschrieben werden könnten. Die hier enthaltenen Inhalte stellen noch keinen verbindlichen eCH-Prozess und keine abschliessende technische Architektur dar.
+
+## Projektorganisation
+
+| Rolle | Person | Organisation |
+| --- | --- | --- |
+| Projektleitung | [Maria Rothstein](https://www.zhaw.ch/de/ueber-uns/person/pell) | ZHAW |
+| Stellvertretende Projektleitung | [Dr. Christian Hitz](https://www.zhaw.ch/de/ueber-uns/person/hitz) | ZHAW |
+| Co-Projektleitung | Dominic Müller | Verein eCH |
+| Projektteam | Daniel Keller, Elias Mayer und Martin Rüfenacht | Verein eCH | [Dr. Alexander Mertes](https://www.zhaw.ch/de/ueber-uns/person/mert), [Dr. Achim Lang](https://www.zhaw.ch/de/ueber-uns/person/lanhv) | ZHAW |
